@@ -5,17 +5,22 @@ from diator.requests.request_handler import RequestHandler
 
 
 class RequestMap:
-    def __init__(self) -> None:
-        self._request_map: dict[Type[Request], Type[RequestHandler]] = {}
+    def __init__(
+        self, request_map: dict[Type[Request], Type[RequestHandler]] | None = None
+    ) -> None:
+        self._request_map = request_map or {}
 
-    def bind(self, request_type: Type[Request], handler_type: Type[RequestHandler]) -> None:
+    def bind(
+        self, request_type: Type[Request], handler_type: Type[RequestHandler]
+    ) -> None:
         self._request_map[request_type] = handler_type
 
     def get(self, request_type: Type[Request]) -> Type[RequestHandler]:
         handler_type = self._request_map.get(request_type)
         if not handler_type:
             raise RequestHandlerDoesNotExist(
-                "RequestHandler not found matching Request type.")
+                "RequestHandler not found matching Request type."
+            )
 
         return handler_type
 
