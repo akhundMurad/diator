@@ -25,4 +25,8 @@ class EventEmitter:
 
 
 def _build_message(event: Event) -> Message:
-    return Message(message_id=event.event_id, payload=orjson.dumps(event).decode())
+    return Message(
+        message_id=event.event_id,
+        payload=orjson.dumps(event).decode(),
+        event_type=type(event).__name__,
+    )

@@ -9,7 +9,7 @@ async def test_redis_message_broker_publish_event(
     async with redis_client.pubsub() as pubsub:
         await pubsub.psubscribe("test_diator_channel:*")
 
-        message = Message(payload="hello")
+        message = Message(payload="hello", event_type="")
         await redis_message_broker.send_message(message=message)
         await pubsub.get_message(ignore_subscribe_messages=True)
         message = await pubsub.get_message(ignore_subscribe_messages=True)

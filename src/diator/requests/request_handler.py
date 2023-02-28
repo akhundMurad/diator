@@ -1,15 +1,10 @@
-from typing import Protocol, TypeVar
+from typing import Protocol
 
 from diator.events.event import Event
-from diator.requests.request import Request
-from diator.response import Response
+from diator.generics import Req_contra, Res_co
 
 
-Req = TypeVar("Req", bound=Request, contravariant=True)
-Res = TypeVar("Res", Response, None, covariant=True)
-
-
-class RequestHandler(Protocol[Req, Res]):
+class RequestHandler(Protocol[Req_contra, Res_co]):
     @property
     def events(self) -> list[Event]:
         ...
@@ -17,5 +12,5 @@ class RequestHandler(Protocol[Req, Res]):
     def add_event(self, event: Event) -> None:
         ...
 
-    async def handle(self, request: Req) -> Res:
+    async def handle(self, request: Req_contra) -> Res_co:
         raise NotImplementedError

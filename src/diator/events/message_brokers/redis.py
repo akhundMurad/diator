@@ -16,7 +16,9 @@ class RedisMessageBroker:
 
     async def send_message(self, message: Message) -> None:
         async with self._client.pubsub() as pubsub:
-            channel = f"{self._channel_prefix}:{message.message_id}"
+            channel = (
+                f"{self._channel_prefix}:{message.message_id}:{message.event_type}"
+            )
 
             await pubsub.subscribe(channel)
 

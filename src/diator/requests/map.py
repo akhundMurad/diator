@@ -5,10 +5,8 @@ from diator.requests.request_handler import RequestHandler
 
 
 class RequestMap:
-    def __init__(
-        self, request_map: dict[Type[Request], Type[RequestHandler]] | None = None
-    ) -> None:
-        self._request_map = request_map or {}
+    def __init__(self) -> None:
+        self._request_map: dict[Type[Request], Type[RequestHandler]] = {}
 
     def bind(
         self, request_type: Type[Request], handler_type: Type[RequestHandler]

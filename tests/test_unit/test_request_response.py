@@ -5,7 +5,7 @@ from diator.events.event import Event
 from diator.mediator import Mediator
 from diator.requests.request import Request
 from diator.requests.request_handler import RequestHandler
-from diator.map import RequestMap
+from diator.requests.map import RequestMap
 from diator.response import Response
 
 
