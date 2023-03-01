@@ -9,8 +9,5 @@ class RequestHandler(Protocol[Req_contra, Res_co]):
     def events(self) -> list[Event]:
         ...
 
-    def add_event(self, event: Event) -> None:
-        ...
-
     async def handle(self, request: Req_contra) -> Res_co:
         raise NotImplementedError

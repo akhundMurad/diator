@@ -1,5 +1,6 @@
 import logging
 from typing import Type
+import orjson
 from redis import asyncio as redis
 from dataclass_factory import Factory
 
@@ -29,6 +30,10 @@ class RedisConsumer:
 
     async def consume(self) -> None:
         async with self._redis_client.pubsub() as pubsub:
+            logger.info(
+                "Redis Consumer has been started on %s channel", self._channel_prefix
+            )
+
             await pubsub.psubscribe(f"{self._channel_prefix}:*")
 
             while True:
@@ -57,7 +62,7 @@ class RedisConsumer:
     def _get_event_by_name(self, event_name: str) -> Type[Event]:
         events = self._event_map.get_events()
         event = list(
-            filter(lambda event_type: type(event_type).__name__ == event_name, events)
+            filter(lambda event_type: event_type.__name__ == event_name, events)
         )
         if not event:
             raise EventNotFound(f"Event with name {event_name} was not found.")
@@ -65,7 +70,7 @@ class RedisConsumer:
         return event[0]
 
     def _build_event_from_message(self, message: dict) -> Event:
-        data: dict = message["data"]
+        data: dict = orjson.loads(message["data"].decode())
         channel: str = message["channel"].decode()
         event_name = channel.split(":")[-1]
 
