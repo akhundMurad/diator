@@ -4,7 +4,7 @@ from typing import Type, TypeVar
 from diator.events.event import DomainEvent
 from diator.events.event_handler import EventHandler
 
-E_contra = TypeVar("E_contra", bound=DomainEvent, contravariant=True)
+E = TypeVar("E", bound=DomainEvent, contravariant=True)
 
 
 class EventMap:
@@ -13,12 +13,10 @@ class EventMap:
             Type[DomainEvent], list[Type[EventHandler]]
         ] = defaultdict(lambda: [])
 
-    def bind(
-        self, event_type: Type[E_contra], handler_type: Type[EventHandler[E_contra]]
-    ) -> None:
+    def bind(self, event_type: Type[E], handler_type: Type[EventHandler[E]]) -> None:
         self._event_map[event_type].append(handler_type)
 
-    def get(self, event_type: Type[E_contra]) -> list[Type[EventHandler[E_contra]]]:
+    def get(self, event_type: Type[E]) -> list[Type[EventHandler[E]]]:
         return self._event_map[event_type]
 
     def get_events(self) -> list[Type[DomainEvent]]:
