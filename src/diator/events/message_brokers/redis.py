@@ -1,8 +1,9 @@
 import logging
+
+import orjson
 import redis.asyncio as redis
 
 from diator.events.message_brokers.protocol import Message
-
 
 logger = logging.getLogger(__name__)
 
@@ -17,10 +18,10 @@ class RedisMessageBroker:
     async def send_message(self, message: Message) -> None:
         async with self._client.pubsub() as pubsub:
             channel = (
-                f"{self._channel_prefix}:{message.message_id}:{message.event_type}"
+                f"{self._channel_prefix}:{message.message_type}:{message.message_id}"
             )
 
             await pubsub.subscribe(channel)
 
-            logger.info("Sending event to Redis Pub/Sub %s.", message.message_id)
-            await self._client.publish(channel, message.payload)
+            logger.info("Sending message to Redis Pub/Sub %s.", message.message_id)
+            await self._client.publish(channel, orjson.dumps(message))

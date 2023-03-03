@@ -1,8 +1,8 @@
-from examples.common.user_joined_event import UserJoinedEvent
+from examples.common.user_joined_domain_event import UserJoinedDomainEvent
 
-from src.diator.events.event_handler import EventHandler
+from diator.events.event_handler import EventHandler
 
 
-class UserJoinedEventHandler(EventHandler[UserJoinedEvent]):
-    async def handle(self, event: UserJoinedEvent) -> None:
+class UserJoinedEventHandler(EventHandler[UserJoinedDomainEvent]):
+    async def handle(self, event: UserJoinedDomainEvent) -> None:
         print("READY", event)

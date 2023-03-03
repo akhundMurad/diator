@@ -1,6 +1,5 @@
 from typing import Protocol, Type, TypeVar
 
-
 T = TypeVar("T")
 
 

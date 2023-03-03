@@ -1,8 +1,8 @@
 from dataclasses import dataclass, field
 
-from diator.events.event import Event
+from diator.events.event import DomainEvent
 
 
 @dataclass(frozen=True, kw_only=True)
-class UserJoinedEvent(Event):
+class UserJoinedDomainEvent(DomainEvent):
     user_id: int = field()

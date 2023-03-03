@@ -1,11 +1,12 @@
 from typing import Type
+
 from diator.container import Container
 from diator.events.event import Event
 from diator.events.event_emitter import EventEmitter
+from diator.requests.map import RequestMap
 from diator.requests.request import Request
 from diator.requests.request_handler import RequestHandler
 from diator.response import Response
-from diator.requests.map import RequestMap
 
 
 class Mediator:

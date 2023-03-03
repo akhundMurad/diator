@@ -1,8 +1,8 @@
 from dataclasses import dataclass, field
 
-from diator.requests.request import Request
+from diator.events.event import NotificationEvent
 
 
 @dataclass(frozen=True, kw_only=True)
-class JoinMeetingRoomCommand(Request):
+class UserJoinedNotificationEvent(NotificationEvent):
     user_id: int = field()

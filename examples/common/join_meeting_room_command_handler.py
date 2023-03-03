@@ -1,6 +1,7 @@
 from examples.common.join_meeting_room_command import JoinMeetingRoomCommand
-from examples.common.user_joined_event import UserJoinedEvent
-from src.diator.requests.request_handler import RequestHandler
+from examples.common.user_joined_domain_event import UserJoinedDomainEvent
+from examples.common.user_joined_notification_event import UserJoinedNotificationEvent
+from diator.requests.request_handler import RequestHandler
 
 
 class JoinMeetingRoomCommandHandler(RequestHandler[JoinMeetingRoomCommand, None]):
@@ -12,4 +13,5 @@ class JoinMeetingRoomCommandHandler(RequestHandler[JoinMeetingRoomCommand, None]
         return self._events
 
     async def handle(self, request: JoinMeetingRoomCommand) -> None:
-        self._events.append(UserJoinedEvent(user_id=request.user_id))
+        self._events.append(UserJoinedDomainEvent(user_id=request.user_id))
+        self._events.append(UserJoinedNotificationEvent(user_id=123))
