@@ -6,13 +6,29 @@ build-backend = "hatchling.build"
 name = "diator"
 version = "0.0.1"
 authors = [{ name = "Murad Akhundov", email = "akhundov1murad@gmail.com" }]
-description = "Diator is a Python library for implementing CQRS pattern in your Python applications. It provides a set of abstractions and utilities to help you separate your read and write concerns, allowing for better scalability, performance, and maintainability of your application."
+description = "Diator is a Python library for implementing CQRS pattern in your Python applications."
 readme = "README.md"
+license = "MIT"
 requires-python = ">=3.9"
 classifiers = [
   "Programming Language :: Python :: 3",
   "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",
+]
+
+keywords = [
+  "diator",
+  "CQRS",
+  "event",
+  "command",
+  "query",
+  "events",
+  "commands",
+  "queries",
+  "mediator",
+  "mediatr",
+  "di",
+  "async",
 ]
 
 [project.urls]
