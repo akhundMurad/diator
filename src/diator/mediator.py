@@ -10,6 +10,26 @@ from diator.response import Response
 
 
 class Mediator:
+    """
+    The main mediator object.
+
+    Usage::
+
+      redis_client = Redis()  # async redis client
+      message_broker = RedisMessageBroker(redis_client)
+      event_map =  EventMap()
+      event_map.bind(UserJoinedDomainEvent, UserJoinedDomainEventHandler)
+      request_map = RequestMap()
+      request_map.bind(JoinUserCommand, JoinUserCommandHandler)
+      event_emitter = EventEmitter(message_broker, event_emitter, container)
+
+      mediator = Mediator(request_map, event_emitter, container)
+
+      # Handles command and published events.
+      await mediator.send(join_user_command)
+
+    """
+
     def __init__(
         self,
         request_map: RequestMap,

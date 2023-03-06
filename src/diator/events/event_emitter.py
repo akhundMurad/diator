@@ -4,8 +4,7 @@ from functools import singledispatchmethod
 from dataclass_factory import Factory
 
 from diator.container import Container
-from diator.events.event import (DomainEvent, ECSTEvent, Event,
-                                 NotificationEvent)
+from diator.events.event import DomainEvent, ECSTEvent, Event, NotificationEvent
 from diator.events.map import EventMap
 from diator.events.message_brokers.protocol import Message, MessageBroker
 
@@ -13,6 +12,27 @@ logger = logging.getLogger(__name__)
 
 
 class EventEmitter:
+    """
+    Event emitter is responsible for sending events to the according handlers or
+    to the message broker absraction.
+
+    Usage::
+
+      redis_client = Redis()  # async redis client
+      message_broker = RedisMessageBroker(redis_client)
+      event_map =  EventMap()
+      event_map.bind(UserJoinedDomainEvent, UserJoinedDomainEventHandler)
+
+      event_emitter = EventEmitter(message_broker, event_emitter, container)
+
+      # Uses UserJoinedDomainEventHandler for handling event:
+      await event_emitter.emit(user_joined_domain_event)
+
+      # Sends event to the Redis Pub/Sub:
+      await event_emitter.emit(user_joined_notification_event)
+
+    """
+
     def __init__(
         self, message_broker: MessageBroker, event_map: EventMap, container: Container
     ) -> None:

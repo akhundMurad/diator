@@ -11,5 +11,11 @@ class Message:
 
 
 class MessageBroker(Protocol):
+    """
+    Interface over message broker.
+
+    Used for sending messages to message brokers (currently only redis supported).
+    """
+
     async def send_message(self, message: Message) -> None:
         ...
