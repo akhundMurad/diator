@@ -7,7 +7,7 @@ E = TypeVar("E", bound=DomainEvent, contravariant=True)
 
 class EventHandler(Protocol[E]):
     """
-    Event handler interface.
+    The event handler interface.
 
     Usage::
 

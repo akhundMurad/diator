@@ -13,8 +13,8 @@ logger = logging.getLogger(__name__)
 
 class EventEmitter:
     """
-    Event emitter is responsible for sending events to the according handlers or
-    to the message broker absraction.
+    The event emitter is responsible for sending events to the according handlers or
+    to the message broker abstraction.
 
     Usage::
 

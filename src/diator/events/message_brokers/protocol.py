@@ -12,7 +12,7 @@ class Message:
 
 class MessageBroker(Protocol):
     """
-    Interface over message broker.
+    The interface over a message broker.
 
     Used for sending messages to message brokers (currently only redis supported).
     """

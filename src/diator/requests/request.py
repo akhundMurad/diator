@@ -5,9 +5,9 @@ from uuid import UUID, uuid4
 @dataclass(frozen=True, kw_only=True)
 class Request:
     """
-    Base class for request type objects.
+    Base class for request-type objects.
 
-    Request is a input of the request handler.
+    The request is an input of the request handler.
     Often Request is used for defining queries or commands.
 
     Usage::

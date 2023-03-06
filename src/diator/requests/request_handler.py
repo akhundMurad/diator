@@ -10,9 +10,9 @@ Res = TypeVar("Res", Response, None, covariant=True)
 
 class RequestHandler(Protocol[Req, Res]):
     """
-    Request handler interface.
+    The request handler interface.
 
-    Request handler is a object, which gets request as input and may return response as a result.
+    The request handler is an object, which gets a request as input and may return a response as a result.
 
     Command handler example::
 

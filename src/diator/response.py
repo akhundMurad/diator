@@ -6,9 +6,9 @@ class Response:
     """
     Base class for response type objects.
 
-    Response is a result of the request handling, which holded by RequestHandler.
+    The response is a result of the request handling, which hold by RequestHandler.
 
-    Often response is used for defining result of the query.
+    Often the response is used for defining the result of the query.
 
     Usage::
 

@@ -25,7 +25,7 @@ class Mediator:
 
       mediator = Mediator(request_map, event_emitter, container)
 
-      # Handles command and published events.
+      # Handles command and published events by the command handler.
       await mediator.send(join_user_command)
 
     """
