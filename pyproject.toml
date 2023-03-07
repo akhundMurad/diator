@@ -4,17 +4,21 @@ build-backend = "hatchling.build"
 
 [project]
 name = "diator"
-version = "0.0.1"
+version = "0.0.2"
 authors = [{ name = "Murad Akhundov", email = "akhundov1murad@gmail.com" }]
 description = "Diator is a Python library for implementing CQRS pattern in your Python applications."
 readme = "README.md"
 license = "MIT"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 classifiers = [
-  "Programming Language :: Python :: 3",
+  "Development Status :: 3 - Alpha",
   "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
   "Operating System :: OS Independent",
 ]
+
+dependencies = ["orjson", "dataclass_factory"]
 
 keywords = [
   "diator",
@@ -29,8 +33,43 @@ keywords = [
   "mediatr",
   "di",
   "async",
+  "asyncio",
+]
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+  "/.github",
+  "/docs",
+  "/examples",
+  "/deps",
+  "/htmlcov",
+  "/tests",
+  "mkdocs-plugins.code-workspace",
+  "Makefile",
+  "CODE_OF_CONDUCT.md",
+  ".isort.cfg",
+  ".gitignore",
+  ".flake8",
+  "junit",
+  "requirements.txt",
+  "mypy.ini",
+  "pytest.ini",
+  ".flake8",
+  "pytest.ini",
 ]
 
 [project.urls]
 "Homepage" = "https://github.com/akhundMurad/diator"
 "Bug Tracker" = "https://github.com/akhundMurad/diator/issues"
+
+[project.optional-dependencies]
+redis = ["redis"]
+test = [
+  "pytest",
+  "pytest-asyncio",
+  "black",
+  "vulture",
+  "mypy",
+  "types-redis",
+  "isort",
+]

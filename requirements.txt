@@ -1,0 +1,10 @@
+pytest
+pytest-asyncio
+flake8
+mypy
+black
+types-redis
+vulture
+dataclass_factory
+isort
+orjson

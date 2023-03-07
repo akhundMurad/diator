@@ -89,6 +89,7 @@ def _build_message(event: NotificationEvent | ECSTEvent) -> Message:
 
     return Message(
         message_type=event._event_type,
+        message_name=type(event).__name__,
         message_id=event.event_id,
         payload=payload,
     )
