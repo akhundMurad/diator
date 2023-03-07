@@ -6,7 +6,7 @@ from diator.events.message_brokers.redis import RedisMessageBroker
 
 @pytest.fixture()
 def redis_client() -> redis.Redis:
-    return redis.Redis.from_url("redis://redis:6379/0")
+    return redis.Redis.from_url("redis://localhost:6379/0")
 
 
 @pytest.fixture()
