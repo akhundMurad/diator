@@ -8,3 +8,4 @@ vulture
 dataclass_factory
 isort
 orjson
+redis
