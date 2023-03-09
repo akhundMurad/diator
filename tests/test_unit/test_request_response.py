@@ -38,7 +38,7 @@ class CloseMeetingRoomCommandHandler(RequestHandler[CloseMeetingRoomCommand, Non
 class TestContainer:
     _handler = CloseMeetingRoomCommandHandler()
 
-    def get(self, instance_type):
+    async def resolve(self, type_):
         return self._handler
 
 
@@ -73,7 +73,7 @@ class ReadMeetingDetailsQueryHandler(
 class TestQueryContainer:
     _handler = ReadMeetingDetailsQueryHandler()
 
-    def get(self, instance_type):
+    async def resolve(self, type_):
         return self._handler
 
 
@@ -81,17 +81,17 @@ async def test_sending_request_with_response() -> None:
     event_emitter = EventEmitter(
         message_broker=FakeMessageBroker(),
         event_map=EventMap(),
-        container=TestContainer(),
+        container=TestContainer(),  # type: ignore
     )
     request_map = RequestMap()
     request_map.bind(ReadMeetingDetailsQuery, ReadMeetingDetailsQueryHandler)
     mediator = Mediator(
         request_map=request_map,
-        container=TestQueryContainer(),
+        container=TestQueryContainer(),  # type: ignore
         event_emitter=event_emitter,
     )
 
-    handler = TestQueryContainer().get(ReadMeetingDetailsQuery)
+    handler = await TestQueryContainer().resolve(ReadMeetingDetailsQuery)
 
     assert not handler.called
 
@@ -107,15 +107,15 @@ async def test_sending_request_without_response() -> None:
     event_emitter = EventEmitter(
         message_broker=FakeMessageBroker(),
         event_map=EventMap(),
-        container=TestContainer(),
+        container=TestContainer(),  # type: ignore
     )
     request_map = RequestMap()
     request_map.bind(CloseMeetingRoomCommand, CloseMeetingRoomCommandHandler)
     mediator = Mediator(
-        request_map=request_map, container=TestContainer(), event_emitter=event_emitter
+        request_map=request_map, container=TestContainer(), event_emitter=event_emitter  # type: ignore
     )
 
-    handler = TestContainer().get(CloseMeetingRoomCommandHandler)
+    handler = await TestContainer().resolve(CloseMeetingRoomCommandHandler)
 
     assert not handler.called
 

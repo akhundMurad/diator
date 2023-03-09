@@ -1,6 +1,6 @@
 from typing import Type
 
-from diator.container import Container
+from diator.container.protocol import Container
 from diator.events.event import Event
 from diator.events.event_emitter import EventEmitter
 from diator.requests.map import RequestMap
@@ -42,7 +42,7 @@ class Mediator:
 
     async def send(self, request: Request) -> Response | None:
         handler_type = self._request_map.get(type(request))
-        handler = self._container.get(handler_type)
+        handler = await self._container.resolve(handler_type)
 
         response = await handler.handle(request)
 
