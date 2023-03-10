@@ -3,7 +3,7 @@ from functools import singledispatchmethod
 
 from dataclass_factory import Factory
 
-from diator.container import Container
+from diator.container.protocol import Container
 from diator.events.event import DomainEvent, ECSTEvent, Event, NotificationEvent
 from diator.events.map import EventMap
 from diator.events.message_brokers.protocol import Message, MessageBroker
@@ -49,7 +49,7 @@ class EventEmitter:
         handlers_types = self._event_map.get(type(event))
 
         for handler_type in handlers_types:
-            handler = self._container.get(handler_type)
+            handler = await self._container.resolve(handler_type)
             logger.info(
                 "Handling Event(%s) via event handler(%s)",
                 type(event).__name__,

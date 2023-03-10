@@ -114,6 +114,26 @@ class ReadMeetingQueryHandler(RequestHandler[ReadMeetingQuery, ReadMeetingQueryR
 
 ```
 
+### Setup dependencies
+```python
+from rodi import Container as ExternalContainer  # using rodi as di-framework
+from diator.container.rodi import RodiContainer
+
+
+def setup_di() -> RodiContainer:
+    external_container = ExternalContainer()
+
+    external_container.register(UserJoinedDomainEventHandler)
+    external_container.register(JoinMeetingCommandHandler)
+    external_container.register(ReadMeetingQueryHandler)
+
+    container = RodiContainer()
+    container.attach_external_container(external_container)
+
+    return container
+
+```
+
 ### Build Mediator object
 ```python
 from diator.requests.map import RequestMap
@@ -124,6 +144,8 @@ from diator.events.map import EventMap
 
 
 async def main() -> None:
+    container = setup_di()
+
     event_map = EventMap()
     event_map.bind(UserJoinedDomainEvent, UserJoinedDomainEventHandler)  # Mapping event to event handler
     request_map = RequestMap()
