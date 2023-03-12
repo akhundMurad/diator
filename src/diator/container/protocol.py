@@ -13,7 +13,8 @@ class Container(Protocol[C]):
     def external_container(self) -> C:
         ...
 
-    def attach_external_container(self, container: C) -> None:
+    @external_container.setter
+    def external_container(self, external_container: C) -> None:
         ...
 
     async def resolve(self, type_: Type[T]) -> T:

@@ -18,8 +18,9 @@ class RodiContainer(Container[ExternalContainer]):
 
         return self._external_container
 
-    def attach_external_container(self, container: ExternalContainer) -> None:
-        self._external_container = container
+    @external_container.setter
+    def external_container(self, external_container: ExternalContainer) -> None:
+        self._external_container = external_container
 
     async def resolve(self, type_: Type[T]) -> T:
         if hasattr(self.external_container, "resolve"):

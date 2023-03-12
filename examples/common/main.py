@@ -24,7 +24,7 @@ def configure_di() -> RodiContainer:
     container.register(JoinMeetingRoomCommandHandler)
 
     rodi_container = RodiContainer()
-    rodi_container.attach_external_container(container)
+    rodi_container.external_container = container
     
     return rodi_container
 

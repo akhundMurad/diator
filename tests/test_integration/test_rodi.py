@@ -13,7 +13,7 @@ async def test_rodi_container_resolve() -> None:
     external_container.register(Dependency)
 
     rodi_container = RodiContainer()
-    rodi_container.attach_external_container(external_container)
+    rodi_container.external_container = external_container
 
     resolved = await rodi_container.resolve(Dependency)
 

@@ -128,7 +128,7 @@ def setup_di() -> RodiContainer:
     external_container.register(ReadMeetingQueryHandler)
 
     container = RodiContainer()
-    container.attach_external_container(external_container)
+    container.external_container = external_container
 
     return container
 
