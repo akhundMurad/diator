@@ -9,3 +9,4 @@ dataclass_factory
 isort
 orjson
 redis
+rodi
