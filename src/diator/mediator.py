@@ -48,10 +48,10 @@ class Mediator:
     async def send(self, request: Request) -> Response | None:
         dispatch_result = await self._dispatcher.dispatch(request)
 
-        if events := dispatch_result["events"]:
-            await self._send_events(events.copy())
+        if dispatch_result.events:
+            await self._send_events(dispatch_result.events.copy())
 
-        return dispatch_result["response"]
+        return dispatch_result.response
 
     async def _send_events(self, events: list[Event]) -> None:
         while events:

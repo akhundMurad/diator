@@ -1,9 +1,10 @@
-from typing import TypedDict
+from dataclasses import field, dataclass
 
 from diator.events.event import Event
 from diator.response import Response
 
 
-class DispatchResult(TypedDict):
-    response: Response | None
-    events: list[Event]
+@dataclass
+class DispatchResult:
+    response: Response | None = field(default=None)
+    events: list[Event] = field(default_factory=list)
