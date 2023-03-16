@@ -1,12 +1,13 @@
-from typing import Type
+from typing import Sequence, Type
 
 from diator.container.protocol import Container
 from diator.events.event import Event
 from diator.events.event_emitter import EventEmitter
 from diator.requests.map import RequestMap
 from diator.requests.request import Request
-from diator.requests.request_handler import RequestHandler
 from diator.response import Response
+from diator.middlewares.base import Middleware
+from diator.dispatcher import Dispatcher, DefaultDispatcher
 
 
 class Mediator:
@@ -35,26 +36,22 @@ class Mediator:
         request_map: RequestMap,
         event_emitter: EventEmitter,
         container: Container,
+        middlewares: Sequence[Middleware] | None = None,
+        *,
+        dispatcher_type: Type[Dispatcher] = DefaultDispatcher,
     ) -> None:
-        self._request_map = request_map
-        self._container = container
         self._event_emitter = event_emitter
+        self._dispatcher = dispatcher_type(
+            request_map=request_map, container=container, middlewares=middlewares  # type: ignore
+        )
 
     async def send(self, request: Request) -> Response | None:
-        handler_type = self._request_map.get(type(request))
-        handler = await self._container.resolve(handler_type)
+        dispatch_result = await self._dispatcher.dispatch(request)
 
-        response = await handler.handle(request)
+        if events := dispatch_result["events"]:
+            await self._send_events(events.copy())
 
-        if handler.events:
-            await self._send_events(handler.events.copy())
-
-        return response
-
-    def bind_request_handler(
-        self, request_type: Type[Request], handler_type: Type[RequestHandler]
-    ) -> None:
-        self._request_map.bind(request_type=request_type, handler_type=handler_type)
+        return dispatch_result["response"]
 
     async def _send_events(self, events: list[Event]) -> None:
         while events:
