@@ -1,6 +1,13 @@
 from typing import Type, TypeVar
 
-from rodi import Container as ExternalContainer
+try:
+    from rodi import Container as ExternalContainer  # type: ignore
+except ImportError:
+
+    class ExternalContainer:  # type: ignore
+        def __init__(self) -> None:
+            raise ImportError("Rodi is required to use this module")
+
 
 from diator.container.protocol import Container
 

@@ -1,12 +1,10 @@
 from typing import Sequence, Type
 
 from diator.container.protocol import Container
-from diator.events.event import Event
-from diator.events.event_emitter import EventEmitter
-from diator.requests.map import RequestMap
-from diator.requests.request import Request
+from diator.events import Event, EventEmitter
+from diator.requests.map import RequestMap, Request
 from diator.response import Response
-from diator.middlewares.base import Middleware
+from diator.middlewares import Middleware
 from diator.dispatcher import Dispatcher, DefaultDispatcher
 
 

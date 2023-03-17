@@ -22,11 +22,11 @@ build:
 
 
 test-release:
-	twine upload --repository testpypi dist/*
+	twine upload --repository testpypi dist/* --verbose
 
 
 release:
-	twine upload --repository pypi dist/*
+	twine upload --repository pypi dist/* --verbose
 
 
 test:

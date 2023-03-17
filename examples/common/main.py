@@ -10,11 +10,11 @@ from examples.common.user_joined_domain_event import UserJoinedDomainEvent
 from examples.common.user_joined_event_handler import UserJoinedEventHandler
 
 from diator.requests import RequestMap
-from diator.events.message_brokers import RedisMessageBroker
+from diator.events.message_brokers.redis import RedisMessageBroker
 from diator.events import EventEmitter
 from diator.mediator import Mediator
 from diator.events import EventMap
-from diator.container import RodiContainer
+from diator.container.rodi import RodiContainer
 
 
 def configure_di() -> RodiContainer:

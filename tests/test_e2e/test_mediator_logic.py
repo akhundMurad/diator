@@ -3,10 +3,10 @@ from redis import asyncio as redis
 from dataclasses import dataclass
 from rodi import Container, ServiceLifeStyle
 from diator.middlewares import BaseMiddleware
-from diator.events.message_brokers import RedisMessageBroker
+from diator.events.message_brokers.redis import RedisMessageBroker
 from diator.events import EventEmitter, EventMap
 from diator.mediator import Mediator
-from diator.container import RodiContainer
+from diator.container.rodi import RodiContainer
 from diator.requests import Request, RequestHandler, RequestMap
 from diator.response import Response
 

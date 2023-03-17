@@ -117,7 +117,7 @@ class ReadMeetingQueryHandler(RequestHandler[ReadMeetingQuery, ReadMeetingQueryR
 ### Setup dependencies
 ```python
 from rodi import Container as ExternalContainer  # using rodi as di-framework
-from diator.container import RodiContainer
+from diator.container.rodi import RodiContainer
 
 
 def setup_di() -> RodiContainer:
@@ -158,7 +158,7 @@ class SomeMiddleware(BaseMiddleware):
 ### Build Mediator object
 ```python
 from diator.requests import RequestMap
-from diator.events.message_brokers import RedisMessageBroker
+from diator.events.message_brokers.redis import RedisMessageBroker
 from diator.events import EventEmitter
 from diator.mediator import Mediator
 from diator.events import EventMap

@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from uuid import UUID, uuid4
 
 from diator.events import Event, EventEmitter, EventMap
-from diator.events.message_brokers import Message
+from diator.events.message_brokers.redis import Message
 from diator.mediator import Mediator
 from diator.requests import RequestMap, Request, RequestHandler
 from diator.response import Response
