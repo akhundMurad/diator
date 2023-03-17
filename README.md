@@ -23,7 +23,7 @@ pip install diator[redis]  # Currently only Redis is supported
 
 ### Define Commands and Queries:
 ```python
-from diator.requests.request import Request
+from diator.requests import Request
 from diator.response import Response
 
 
@@ -47,7 +47,7 @@ class ReadMeetingQueryResult(Response)
 
 ### Define Events:
 ```python
-from diator.events.event import DomainEvent, NotificationEvent
+from diator.events import DomainEvent, NotificationEvent
 
 
 @dataclasses.dataclass(frozen=True, kw_only=True)
@@ -65,8 +65,8 @@ class UserJoinedNotificationEvent(NotificationEvent):  # will be sent to a messa
 
 ### Define Command and Event Handlers:
 ```python
-from diator.requests.request_handler import RequestHandler
-from diator.events.event_handler import EventHandler
+from diator.requests import RequestHandler
+from diator.events import EventHandler
 
 
 class JoinMeetingCommandHandler(RequestHandler[JoinMeetingCommand, None]):  # Command Handler doesn't return anything
@@ -117,7 +117,7 @@ class ReadMeetingQueryHandler(RequestHandler[ReadMeetingQuery, ReadMeetingQueryR
 ### Setup dependencies
 ```python
 from rodi import Container as ExternalContainer  # using rodi as di-framework
-from diator.container.rodi import RodiContainer
+from diator.container import RodiContainer
 
 
 def setup_di() -> RodiContainer:
@@ -134,13 +134,34 @@ def setup_di() -> RodiContainer:
 
 ```
 
+# Define Middleware
+```python
+from diator.middlewares import BaseMiddleware
+from diator.requests import Request
+from diator.response import Response
+
+
+class SomeMiddleware(BaseMiddleware):
+    async def process_request(request: Request) -> None
+        """
+        Some logic related to request part of the circle.
+        """
+
+    async def process_response(response: Response) -> None
+        """
+        Some logic related to response part of the circle.
+        """
+
+
+```
+
 ### Build Mediator object
 ```python
-from diator.requests.map import RequestMap
-from diator.events.message_brokers.redis import RedisMessageBroker
-from diator.events.event_emitter import EventEmitter
+from diator.requests import RequestMap
+from diator.events.message_brokers import RedisMessageBroker
+from diator.events import EventEmitter
 from diator.mediator import Mediator
-from diator.events.map import EventMap
+from diator.events import EventMap
 
 
 async def main() -> None:
@@ -161,7 +182,7 @@ async def main() -> None:
     )
 
     mediator = Mediator(
-        request_map=request_map, event_emitter=event_emitter, container=container
+        request_map=request_map, event_emitter=event_emitter, container=container, middlewares=[SomeMiddleware()]
     )
 
     """ 

@@ -1,14 +1,10 @@
 from dataclasses import dataclass, field
 from uuid import UUID, uuid4
 
-from diator.events.event import Event
-from diator.events.event_emitter import EventEmitter
-from diator.events.map import EventMap
-from diator.events.message_brokers.protocol import Message
+from diator.events import Event, EventEmitter, EventMap
+from diator.events.message_brokers import Message
 from diator.mediator import Mediator
-from diator.requests.map import RequestMap
-from diator.requests.request import Request
-from diator.requests.request_handler import RequestHandler
+from diator.requests import RequestMap, Request, RequestHandler
 from diator.response import Response
 
 

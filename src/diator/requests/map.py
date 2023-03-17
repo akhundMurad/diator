@@ -9,7 +9,9 @@ class RequestMap:
         self._request_map: dict[Type[Request], Type[RequestHandler]] = {}
 
     def bind(
-        self, request_type: Type[Request], handler_type: Type[RequestHandler]
+        self,
+        request_type: Type[Request],
+        handler_type: Type[RequestHandler],
     ) -> None:
         self._request_map[request_type] = handler_type
 

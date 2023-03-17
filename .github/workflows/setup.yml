@@ -38,16 +38,10 @@ jobs:
 
       - name: Run tests
         run: |
-          python -m pytest tests/
-      - name: Run flake8
+          make test
+      - name: Run linters
         run: |
-          python -m flake8 src/ tests/ --exit-zero
-      - name: Run vulture
-        run: |
-          python -m vulture src/ --min-confidence 70 --exclude src/diator/container.py
-      - name: Run Mypy
-        run: |
-          python -m mypy src/ tests/ --pretty
+          make lint
 
     services:
       redis:

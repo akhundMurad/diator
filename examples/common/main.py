@@ -9,12 +9,12 @@ from examples.common.join_meeting_room_command_handler import (
 from examples.common.user_joined_domain_event import UserJoinedDomainEvent
 from examples.common.user_joined_event_handler import UserJoinedEventHandler
 
-from diator.requests.map import RequestMap
-from diator.events.message_brokers.redis import RedisMessageBroker
-from diator.events.event_emitter import EventEmitter
+from diator.requests import RequestMap
+from diator.events.message_brokers import RedisMessageBroker
+from diator.events import EventEmitter
 from diator.mediator import Mediator
-from diator.events.map import EventMap
-from diator.container.rodi import RodiContainer
+from diator.events import EventMap
+from diator.container import RodiContainer
 
 
 def configure_di() -> RodiContainer:
@@ -25,7 +25,7 @@ def configure_di() -> RodiContainer:
 
     rodi_container = RodiContainer()
     rodi_container.attach_external_container(container)
-    
+
     return rodi_container
 
 

@@ -2,7 +2,7 @@ import json
 
 import redis.asyncio as redis
 
-from diator.events.message_brokers.redis import Message, RedisMessageBroker
+from diator.events.message_brokers import Message, RedisMessageBroker
 
 
 async def test_redis_message_broker_publish_event(
