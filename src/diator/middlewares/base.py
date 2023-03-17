@@ -19,3 +19,18 @@ class Middleware(Protocol):
 
     async def process_response(self, response: Response) -> None:
         ...
+
+
+class BaseMiddleware:
+    def __init__(self) -> None:
+        self._request_handler: RequestHandler | None = None
+
+    @property
+    def request_handler(self) -> RequestHandler:
+        if not self._request_handler:
+            raise RuntimeError("RequestHandler is not set.")
+        return self._request_handler
+
+    @request_handler.setter
+    def request_handler(self, request_handler: RequestHandler) -> None:
+        self._request_handler = request_handler

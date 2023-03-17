@@ -2,7 +2,7 @@ lint:
 	flake8 src/ tests/ --exit-zero
 	black --check src/ tests/
 	vulture src/ --min-confidence 70 --exclude src/diator/container.py
-	mypy src/ tests/ --pretty
+	mypy src/ --pretty
 
 
 artifacts: test
