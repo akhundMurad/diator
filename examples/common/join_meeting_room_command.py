@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 
-from diator.requests.request import Request
+from diator.requests import Request
 
 
 @dataclass(frozen=True, kw_only=True)

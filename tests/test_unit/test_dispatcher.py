@@ -1,10 +1,9 @@
 from dataclasses import dataclass, field
 from uuid import UUID, uuid4
-from diator.events.event import Event
-from diator.middlewares.base import BaseMiddleware
+from diator.events import Event
+from diator.middlewares import BaseMiddleware
 from diator.requests.map import RequestMap
-from diator.requests.request import Request
-from diator.requests.request_handler import RequestHandler
+from diator.requests import Request, RequestHandler
 from diator.response import Response
 from diator.dispatcher import DefaultDispatcher
 

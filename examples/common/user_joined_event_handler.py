@@ -1,6 +1,6 @@
 from examples.common.user_joined_domain_event import UserJoinedDomainEvent
 
-from diator.events.event_handler import EventHandler
+from diator.events import EventHandler
 
 
 class UserJoinedEventHandler(EventHandler[UserJoinedDomainEvent]):

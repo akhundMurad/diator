@@ -1,4 +1,4 @@
-from diator.middlewares.base import Middleware
+from diator.middlewares.base import Middleware, BaseMiddleware
 
 
-__all__ = ("Middleware",)
+__all__ = ("Middleware", "BaseMiddleware")
