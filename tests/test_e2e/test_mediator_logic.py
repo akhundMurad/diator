@@ -2,13 +2,12 @@ from redis import asyncio as redis
 
 from dataclasses import dataclass
 from rodi import Container, ServiceLifeStyle
-from diator.middlewares import BaseMiddleware
 from diator.events.message_brokers.redis import RedisMessageBroker
 from diator.events import EventEmitter, EventMap
 from diator.mediator import Mediator
 from diator.container.rodi import RodiContainer
 from diator.requests import Request, RequestHandler, RequestMap
-from diator.response import Response
+from diator.middlewares import MiddlewareChain
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -30,14 +29,12 @@ class JoinMeetingRoomCommandHandler(RequestHandler[JoinMeetingRoomCommand, None]
         await self._redis_client.set(str(request.meeting_id), str(request.user_id))
 
 
-class TestMiddleware(BaseMiddleware):
+class TestMiddleware:
     _counter = 0
 
-    async def process_request(self, request: Request) -> None:
+    async def __call__(self, request: Request, handle):
         self._counter += 5
-
-    async def process_response(self, response: Response) -> None:
-        ...
+        return await handle(request)
 
 
 async def test_send_command_with_middleware(redis_client: redis.Redis):
@@ -55,7 +52,8 @@ async def test_send_command_with_middleware(redis_client: redis.Redis):
     request_map.bind(JoinMeetingRoomCommand, JoinMeetingRoomCommandHandler)
 
     redis_client = redis.Redis.from_url("redis://localhost:6379/0")
-    middleware = TestMiddleware()
+    middleware_chain = MiddlewareChain()
+    middleware_chain.add(TestMiddleware())
 
     event_emitter = EventEmitter(
         message_broker=RedisMessageBroker(redis_client),
@@ -67,7 +65,7 @@ async def test_send_command_with_middleware(redis_client: redis.Redis):
         request_map=request_map,
         event_emitter=event_emitter,
         container=rodi_container,
-        middlewares=[middleware],
+        middleware_chain=middleware_chain,
     )
 
     await mediator.send(JoinMeetingRoomCommand(user_id=1, meeting_id=1))
