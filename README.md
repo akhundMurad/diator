@@ -20,8 +20,8 @@ pip install diator[redis]  # Currently only Redis is supported
 
 ## Basic usage
 
+### Define Commands and Queries
 
-### Define Commands and Queries:
 ```python
 from diator.requests import Request
 from diator.response import Response
@@ -45,7 +45,8 @@ class ReadMeetingQueryResult(Response)
 
 ```
 
-### Define Events:
+### Define Events
+
 ```python
 from diator.events import DomainEvent, NotificationEvent
 
@@ -63,7 +64,8 @@ class UserJoinedNotificationEvent(NotificationEvent):  # will be sent to a messa
 
 ```
 
-### Define Command and Event Handlers:
+### Define Command and Event Handlers
+
 ```python
 from diator.requests import RequestHandler
 from diator.events import EventHandler
@@ -115,6 +117,7 @@ class ReadMeetingQueryHandler(RequestHandler[ReadMeetingQuery, ReadMeetingQueryR
 ```
 
 ### Setup dependencies
+
 ```python
 from rodi import Container as ExternalContainer  # using rodi as di-framework
 from diator.container.rodi import RodiContainer
@@ -134,34 +137,36 @@ def setup_di() -> RodiContainer:
 
 ```
 
-# Define Middleware
+### Define Middleware
+
 ```python
-from diator.middlewares import BaseMiddleware
 from diator.requests import Request
-from diator.response import Response
 
 
-class SomeMiddleware(BaseMiddleware):
-    async def process_request(request: Request) -> None
+class SomeMiddleware:
+    async def __call__(request: Request, handle):
         """
         Some logic related to request part of the circle.
         """
 
-    async def process_response(response: Response) -> None
+        response = await handle(request)
+
         """
         Some logic related to response part of the circle.
         """
-
+        return response
 
 ```
 
 ### Build Mediator object
+
 ```python
 from diator.requests import RequestMap
 from diator.events.message_brokers.redis import RedisMessageBroker
 from diator.events import EventEmitter
 from diator.mediator import Mediator
 from diator.events import EventMap
+from diator.middlewares import MiddlewareChain
 
 
 async def main() -> None:
@@ -175,6 +180,9 @@ async def main() -> None:
 
     redis_client = redis.Redis.from_url("redis://localhost:6379/0")  # Creating Async Redis Client
 
+    middleware_chain = MiddlewareChain()
+    middleware_chain.add(SomeMiddleware())  # Adding Middleware to a chain
+
     event_emitter = EventEmitter(
         message_broker=RedisMessageBroker(redis_client),
         event_map=event_map,
@@ -182,7 +190,10 @@ async def main() -> None:
     )
 
     mediator = Mediator(
-        request_map=request_map, event_emitter=event_emitter, container=container, middlewares=[SomeMiddleware()]
+        request_map=request_map, 
+        event_emitter=event_emitter, 
+        container=container, 
+        middleware_chain=MiddlewareChain
     )
 
     """ 
@@ -203,6 +214,7 @@ if __name__ == "__main__":
 ```
 
 Redis Pub/Sub output:
+
 ```json
 {
    "message_type":"notification_event",
