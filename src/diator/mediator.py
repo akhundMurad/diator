@@ -1,10 +1,10 @@
-from typing import Sequence, Type
+from typing import Type
 
 from diator.container.protocol import Container
 from diator.events import Event, EventEmitter
-from diator.requests.map import RequestMap, Request
+from diator.middlewares import MiddlewareChain
+from diator.requests import RequestMap, Request
 from diator.response import Response
-from diator.middlewares import Middleware
 from diator.dispatcher import Dispatcher, DefaultDispatcher
 
 
@@ -34,13 +34,13 @@ class Mediator:
         request_map: RequestMap,
         event_emitter: EventEmitter,
         container: Container,
-        middlewares: Sequence[Middleware] | None = None,
+        middleware_chain: MiddlewareChain | None = None,
         *,
         dispatcher_type: Type[Dispatcher] = DefaultDispatcher,
     ) -> None:
         self._event_emitter = event_emitter
         self._dispatcher = dispatcher_type(
-            request_map=request_map, container=container, middlewares=middlewares  # type: ignore
+            request_map=request_map, container=container, middleware_chain=middleware_chain  # type: ignore
         )
 
     async def send(self, request: Request) -> Response | None:

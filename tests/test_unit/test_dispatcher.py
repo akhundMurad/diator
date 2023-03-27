@@ -1,10 +1,9 @@
 from dataclasses import dataclass, field
 from uuid import UUID, uuid4
 from diator.events import Event
-from diator.middlewares import BaseMiddleware
+from diator.middlewares import MiddlewareChain
 from diator.requests.map import RequestMap
 from diator.requests import Request, RequestHandler
-from diator.response import Response
 from diator.dispatcher import DefaultDispatcher
 
 
@@ -47,10 +46,12 @@ async def test_default_dispatcher_logic() -> None:
     middleware = FirstMiddleware()
     request_map = RequestMap()
     request_map.bind(ReadMeetingDetailsQuery, ReadMeetingDetailsQueryHandler)
+    middleware_chain = MiddlewareChain()
+    middleware_chain.add(middleware)
     dispatcher = DefaultDispatcher(
         request_map=request_map,
         container=TestQueryContainer(),
-        middlewares=[middleware],
+        middleware_chain=middleware_chain,
     )
 
     request = ReadMeetingDetailsQuery(meeting_room_id=uuid4())
@@ -64,10 +65,12 @@ async def test_default_dispatcher_logic() -> None:
 async def test_default_dispatcher_chain_logic() -> None:
     request_map = RequestMap()
     request_map.bind(ReadMeetingDetailsQuery, ReadMeetingDetailsQueryHandler)
+    middleware_chain = MiddlewareChain()
+    middleware_chain.set([FirstMiddleware(), SecondMiddleware(), ThirdMiddleware()])
     dispatcher = DefaultDispatcher(
         request_map=request_map,
         container=TestQueryContainer(),
-        middlewares=[FirstMiddleware(), SecondMiddleware(), ThirdMiddleware()],
+        middleware_chain=middleware_chain,
     )
 
     request = ReadMeetingDetailsQuery(meeting_room_id=uuid4())
@@ -84,34 +87,25 @@ async def test_default_dispatcher_chain_logic() -> None:
     assert result.response.third == "DONE"
 
 
-class FirstMiddleware(BaseMiddleware):
-    def __init__(self) -> None:
-        super().__init__()
-
-    async def process_request(self, request: Request) -> None:
+class FirstMiddleware:
+    async def __call__(self, request: Request, handle):
         request.meeting_room_id = "REQ"
-
-    async def process_response(self, response: Response) -> None:
+        response = await handle(request)
         response.meeting_room_id = "RES"
+        return response
 
 
-class SecondMiddleware(BaseMiddleware):
-    def __init__(self) -> None:
-        super().__init__()
-
-    async def process_request(self, request: Request) -> None:
+class SecondMiddleware:
+    async def __call__(self, request: Request, handle):
         request.second = "DONE"
-
-    async def process_response(self, response: Response) -> None:
+        response = await handle(request)
         response.second = "DONE"
+        return response
 
 
-class ThirdMiddleware(BaseMiddleware):
-    def __init__(self) -> None:
-        super().__init__()
-
-    async def process_request(self, request: Request) -> None:
+class ThirdMiddleware:
+    async def __call__(self, request: Request, handle):
         request.third = "DONE"
-
-    async def process_response(self, response: Response) -> None:
+        response = await handle(request)
         response.third = "DONE"
+        return response
