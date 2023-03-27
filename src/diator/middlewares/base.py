@@ -1,8 +1,7 @@
 import functools
 from typing import Protocol, TypeVar, Callable, Awaitable
-from diator.requests.request import Request
 
-from diator.requests.request_handler import RequestHandler
+from diator.requests.request import Request
 from diator.response import Response
 
 
@@ -16,6 +15,9 @@ class Middleware(Protocol):
         ...
 
 
+Handle = Callable[[Req], Awaitable[Res]]
+
+
 class MiddlewareChain:
     def __init__(self) -> None:
         self._chain: list[Middleware] = []
@@ -26,12 +28,8 @@ class MiddlewareChain:
     def add(self, middleware: Middleware) -> None:
         self._chain.append(middleware)
 
-    def wrap(self, handler: RequestHandler[Req, Res]) -> RequestHandler[Req, Res]:
-        handle = handler.handle
-
+    def wrap(self, handle: Handle) -> Handle:
         for middleware in reversed(self._chain):
-            handle = functools.partial(middleware.__call__, handle=handle)  # type: ignore
+            handle = functools.partial(middleware.__call__, handle=handle)
 
-        handler.handle = handle  # type: ignore
-
-        return handler
+        return handle

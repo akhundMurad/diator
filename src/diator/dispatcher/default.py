@@ -20,8 +20,8 @@ class DefaultDispatcher:
         handler_type = self._request_map.get(type(request))
         handler = await self._container.resolve(handler_type)
 
-        wrapped_handler = self._middleware_chain.wrap(handler)
+        wrapped_handle = self._middleware_chain.wrap(handler.handle)
 
-        response = await wrapped_handler.handle(request)
+        response = await wrapped_handle(request)
 
-        return DispatchResult(response=response, events=wrapped_handler.events)
+        return DispatchResult(response=response, events=handler.events)
