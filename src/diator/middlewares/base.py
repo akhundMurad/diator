@@ -1,7 +1,7 @@
 import functools
 from typing import Protocol, TypeVar, Callable, Awaitable
 
-from diator.requests.request import Request
+from diator.requests import Request
 from diator.response import Response
 
 

@@ -6,16 +6,15 @@ from examples.common.join_meeting_room_command import JoinMeetingRoomCommand
 from examples.common.join_meeting_room_command_handler import (
     JoinMeetingRoomCommandHandler,
 )
-from examples.common.middlewares import SampleMiddleware
+from examples.common.middlewares import FirstMiddleware, SecondMiddleware
 from examples.common.user_joined_domain_event import UserJoinedDomainEvent
 from examples.common.user_joined_event_handler import UserJoinedEventHandler
 
 from diator.middlewares import MiddlewareChain
 from diator.requests import RequestMap
 from diator.events.message_brokers.redis import RedisMessageBroker
-from diator.events import EventEmitter
+from diator.events import EventEmitter, EventMap
 from diator.mediator import Mediator
-from diator.events import EventMap
 from diator.container.rodi import RodiContainer
 
 
@@ -33,7 +32,8 @@ def configure_di() -> RodiContainer:
 
 async def main() -> None:
     middleware_chain = MiddlewareChain()
-    middleware_chain.add(SampleMiddleware())
+    middleware_chain.add(FirstMiddleware())
+    middleware_chain.add(SecondMiddleware())
     event_map = EventMap()
     event_map.bind(UserJoinedDomainEvent, UserJoinedEventHandler)
     request_map = RequestMap()
