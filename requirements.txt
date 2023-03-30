@@ -10,4 +10,4 @@ isort
 orjson
 redis
 rodi
-di
+di[anyio]
