@@ -1,8 +1,14 @@
-lint:
-	flake8 src/ tests/ --exit-zero
-	black --check src/ tests/
+check-linting:
 	vulture src/ --min-confidence 70 --exclude src/diator/container.py
+	isort --check --profile black src/ tests/ examples/
+	flake8 --exit-zero src/ tests/ examples/
+	black --check --diff src/ tests/ examples/
 	mypy src/ --pretty
+
+
+fix-linting:
+	isort --profile black src/ tests/ examples/
+	black src/ tests/ examples/
 
 
 artifacts: test

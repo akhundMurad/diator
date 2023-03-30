@@ -1,31 +1,24 @@
 from typing import Type, TypeVar
 
-try:
-    from rodi import Container as ExternalContainer  # type: ignore
-except ImportError:
-
-    class ExternalContainer:  # type: ignore
-        def __init__(self) -> None:
-            raise ImportError("Rodi is required to use this module")
-
+import rodi
 
 from diator.container.protocol import Container
 
 T = TypeVar("T")
 
 
-class RodiContainer(Container[ExternalContainer]):
+class RodiContainer(Container[rodi.Container]):
     def __init__(self) -> None:
-        self._external_container: ExternalContainer | None = None
+        self._external_container: rodi.Container | None = None
 
     @property
-    def external_container(self) -> ExternalContainer:
+    def external_container(self) -> rodi.Container:
         if not self._external_container:
             raise AttributeError
 
         return self._external_container
 
-    def attach_external_container(self, container: ExternalContainer) -> None:
+    def attach_external_container(self, container: rodi.Container) -> None:
         self._external_container = container
 
     async def resolve(self, type_: Type[T]) -> T:

@@ -41,7 +41,7 @@ jobs:
           make test
       - name: Run linters
         run: |
-          make lint
+          make check-linting
 
     services:
       redis:

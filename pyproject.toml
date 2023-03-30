@@ -73,3 +73,6 @@ test = [
   "types-redis",
   "isort",
 ]
+
+[tool.isort]
+profile = "black"
