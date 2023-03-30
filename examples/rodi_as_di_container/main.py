@@ -1,21 +1,20 @@
 import asyncio
+
 from redis import asyncio as redis
 from rodi import Container
 
+from diator.container.rodi import RodiContainer
+from diator.events import EventEmitter, EventMap
+from diator.events.message_brokers.redis import RedisMessageBroker
+from diator.mediator import Mediator
+from diator.middlewares import MiddlewareChain
+from diator.requests import RequestMap
+
 from .join_meeting_room_command import JoinMeetingRoomCommand
-from .join_meeting_room_command_handler import (
-    JoinMeetingRoomCommandHandler,
-)
+from .join_meeting_room_command_handler import JoinMeetingRoomCommandHandler
 from .middlewares import FirstMiddleware, SecondMiddleware
 from .user_joined_domain_event import UserJoinedDomainEvent
 from .user_joined_event_handler import UserJoinedEventHandler
-
-from diator.middlewares import MiddlewareChain
-from diator.requests import RequestMap
-from diator.events.message_brokers.redis import RedisMessageBroker
-from diator.events import EventEmitter, EventMap
-from diator.mediator import Mediator
-from diator.container.rodi import RodiContainer
 
 
 def configure_di() -> RodiContainer:

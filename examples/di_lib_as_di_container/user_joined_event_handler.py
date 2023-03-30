@@ -1,6 +1,6 @@
-from .user_joined_domain_event import UserJoinedDomainEvent
-
 from diator.events import EventHandler
+
+from .user_joined_domain_event import UserJoinedDomainEvent
 
 
 class UserJoinedEventHandler(EventHandler[UserJoinedDomainEvent]):
