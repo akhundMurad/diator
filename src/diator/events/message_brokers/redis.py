@@ -1,7 +1,6 @@
 import logging
 
 import orjson
-
 from redis.asyncio import Redis
 
 from diator.events.message_brokers.protocol import Message

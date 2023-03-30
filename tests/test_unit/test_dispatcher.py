@@ -1,10 +1,11 @@
 from dataclasses import dataclass, field
 from uuid import UUID, uuid4
+
+from diator.dispatcher import DefaultDispatcher
 from diator.events import Event
 from diator.middlewares import MiddlewareChain
-from diator.requests.map import RequestMap
 from diator.requests import Request, RequestHandler
-from diator.dispatcher import DefaultDispatcher
+from diator.requests.map import RequestMap
 
 
 @dataclass(kw_only=True)

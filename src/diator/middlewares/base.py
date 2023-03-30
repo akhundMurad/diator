@@ -1,9 +1,8 @@
 import functools
-from typing import Protocol, TypeVar, Callable, Awaitable
+from typing import Awaitable, Callable, Protocol, TypeVar
 
 from diator.requests import Request
 from diator.response import Response
-
 
 Req = TypeVar("Req", bound=Request, contravariant=True)
 Res = TypeVar("Res", Response, None, covariant=True)

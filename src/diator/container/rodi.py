@@ -1,4 +1,5 @@
 from typing import Type, TypeVar
+
 import rodi
 
 from diator.container.protocol import Container
