@@ -1,33 +1,43 @@
 import asyncio
 from redis import asyncio as redis
-from rodi import Container
+from di import Container, bind_by_type
+from di.dependent import Dependent
 
-from examples.common.join_meeting_room_command import JoinMeetingRoomCommand
-from examples.common.join_meeting_room_command_handler import (
+from .join_meeting_room_command import JoinMeetingRoomCommand
+from .join_meeting_room_command_handler import (
     JoinMeetingRoomCommandHandler,
 )
-from examples.common.middlewares import FirstMiddleware, SecondMiddleware
-from examples.common.user_joined_domain_event import UserJoinedDomainEvent
-from examples.common.user_joined_event_handler import UserJoinedEventHandler
+from .middlewares import FirstMiddleware, SecondMiddleware
+from .user_joined_domain_event import UserJoinedDomainEvent
+from .user_joined_event_handler import UserJoinedEventHandler
 
 from diator.middlewares import MiddlewareChain
 from diator.requests import RequestMap
 from diator.events.message_brokers.redis import RedisMessageBroker
 from diator.events import EventEmitter, EventMap
 from diator.mediator import Mediator
-from diator.container.rodi import RodiContainer
+from diator.container.di import DIContainer
 
 
-def configure_di() -> RodiContainer:
+def configure_di() -> DIContainer:
     container = Container()
 
-    container.register(UserJoinedEventHandler)
-    container.register(JoinMeetingRoomCommandHandler)
+    container.bind(
+        bind_by_type(
+            Dependent(UserJoinedEventHandler, scope="request"), UserJoinedEventHandler
+        )
+    )
+    container.bind(
+        bind_by_type(
+            Dependent(JoinMeetingRoomCommandHandler, scope="request"),
+            JoinMeetingRoomCommandHandler,
+        )
+    )
 
-    rodi_container = RodiContainer()
-    rodi_container.attach_external_container(container)
+    di_container = DIContainer()
+    di_container.attach_external_container(container)
 
-    return rodi_container
+    return di_container
 
 
 async def main() -> None:
@@ -40,7 +50,7 @@ async def main() -> None:
     request_map.bind(JoinMeetingRoomCommand, JoinMeetingRoomCommandHandler)
     container = configure_di()
 
-    redis_client = redis.Redis.from_url("redis://localhost:6379/0")
+    redis_client: redis.Redis = redis.Redis.from_url("redis://localhost:6379/0")
 
     event_emitter = EventEmitter(
         message_broker=RedisMessageBroker(redis_client),

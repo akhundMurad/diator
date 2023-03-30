@@ -2,14 +2,7 @@ import logging
 
 import orjson
 
-try:
-    from redis.asyncio import Redis  # type: ignore
-except ImportError:
-
-    class Redis:  # type: ignore
-        def __init__(self) -> None:
-            raise ImportError("Redis is required to use this module")
-
+from redis.asyncio import Redis
 
 from diator.events.message_brokers.protocol import Message
 

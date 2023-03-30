@@ -1,6 +1,6 @@
-from examples.common.join_meeting_room_command import JoinMeetingRoomCommand
-from examples.common.user_joined_domain_event import UserJoinedDomainEvent
-from examples.common.user_joined_notification_event import UserJoinedNotificationEvent
+from .join_meeting_room_command import JoinMeetingRoomCommand
+from .user_joined_domain_event import UserJoinedDomainEvent
+from .user_joined_notification_event import UserJoinedNotificationEvent
 from diator.requests import RequestHandler
 
 

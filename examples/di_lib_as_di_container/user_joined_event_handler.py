@@ -1,4 +1,4 @@
-from examples.common.user_joined_domain_event import UserJoinedDomainEvent
+from .user_joined_domain_event import UserJoinedDomainEvent
 
 from diator.events import EventHandler
 
