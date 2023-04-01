@@ -5,8 +5,8 @@ from rodi import Container
 
 from diator.container.rodi import RodiContainer
 from diator.events import EventEmitter, EventMap
-from diator.events.message_brokers.redis import RedisMessageBroker
 from diator.mediator import Mediator
+from diator.message_brokers.redis import RedisMessageBroker
 from diator.middlewares import MiddlewareChain
 from diator.requests import RequestMap
 

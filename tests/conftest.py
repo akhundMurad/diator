@@ -1,7 +1,7 @@
 import pytest
 import redis.asyncio as redis
 
-from diator.events.message_brokers.redis import RedisMessageBroker
+from diator.message_brokers.redis import RedisMessageBroker
 
 
 @pytest.fixture()

@@ -3,7 +3,7 @@ import logging
 import orjson
 from redis.asyncio import Redis
 
-from diator.events.message_brokers.protocol import Message
+from diator.message_brokers.protocol import Message
 
 logger = logging.getLogger(__name__)
 

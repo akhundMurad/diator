@@ -6,7 +6,7 @@ from dataclass_factory import Factory
 from diator.container.protocol import Container
 from diator.events.event import DomainEvent, ECSTEvent, Event, NotificationEvent
 from diator.events.map import EventMap
-from diator.events.message_brokers.protocol import Message, MessageBroker
+from diator.message_brokers.protocol import Message, MessageBroker
 
 logger = logging.getLogger(__name__)
 
