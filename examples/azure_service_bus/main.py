@@ -1,4 +1,5 @@
 import asyncio
+import os
 from datetime import timedelta
 
 import rodi
@@ -30,10 +31,10 @@ async def main() -> None:
     request_map.bind(CleanUnactiveUsersCommand, CleanUnactiveUsersCommandHandler)
 
     azure_service_bus_client = ServiceBusClient.from_connection_string(
-        "Endpoint=sb://diator.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=S/jmaNenqNa98V70Xc1YbOZCwJYhMkTeZ+ASbFyLPfc="
+        os.getenv("CONNECTION_STRING")
     )
     message_broker = AzureMessageBroker(
-        azure_service_bus_client, "diator-events", timeout=15
+        azure_service_bus_client, os.getenv("TOPIC_NAME"), timeout=15
     )
     event_emitter = EventEmitter(
         message_broker=message_broker, event_map=EventMap(), container=container
