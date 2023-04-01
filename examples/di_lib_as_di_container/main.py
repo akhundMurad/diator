@@ -6,8 +6,8 @@ from redis import asyncio as redis
 
 from diator.container.di import DIContainer
 from diator.events import EventEmitter, EventMap
-from diator.events.message_brokers.redis import RedisMessageBroker
 from diator.mediator import Mediator
+from diator.message_brokers.redis import RedisMessageBroker
 from diator.middlewares import MiddlewareChain
 from diator.requests import RequestMap
 

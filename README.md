@@ -162,7 +162,7 @@ class SomeMiddleware:
 
 ```python
 from diator.requests import RequestMap
-from diator.events.message_brokers.redis import RedisMessageBroker
+from diator.message_brokers.redis import RedisMessageBroker
 from diator.events import EventEmitter
 from diator.mediator import Mediator
 from diator.events import EventMap
