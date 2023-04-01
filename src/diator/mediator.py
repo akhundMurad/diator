@@ -37,7 +37,7 @@ class Mediator:
         self,
         request_map: RequestMap,
         container: Container,
-        event_emitter: EventEmitter | None = None,
+        event_emitter: EventEmitter,
         middleware_chain: MiddlewareChain | None = None,
         *,
         dispatcher_type: Type[Dispatcher] = DefaultDispatcher,
@@ -56,11 +56,6 @@ class Mediator:
         return dispatch_result.response
 
     async def _send_events(self, events: list[Event]) -> None:
-        if not self._event_emitter:
-            raise RuntimeError(
-                "To use events logic, please ensure that you pass the EventEmitter class as a parameter."
-            )
-
         while events:
             event = events.pop()
             await self._event_emitter.emit(event)
