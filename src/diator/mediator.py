@@ -16,13 +16,17 @@ class Mediator:
 
       redis_client = Redis()  # async redis client
       message_broker = RedisMessageBroker(redis_client)
-      event_map =  EventMap()
+      event_map = EventMap()
       event_map.bind(UserJoinedDomainEvent, UserJoinedDomainEventHandler)
       request_map = RequestMap()
       request_map.bind(JoinUserCommand, JoinUserCommandHandler)
       event_emitter = EventEmitter(message_broker, event_emitter, container)
 
-      mediator = Mediator(request_map, event_emitter, container)
+      mediator = Mediator(
+        event_emitter=event_emitter,
+        request_map=request_map,
+        container=container
+      )
 
       # Handles command and published events by the command handler.
       await mediator.send(join_user_command)
@@ -32,8 +36,8 @@ class Mediator:
     def __init__(
         self,
         request_map: RequestMap,
-        event_emitter: EventEmitter,
         container: Container,
+        event_emitter: EventEmitter | None = None,
         middleware_chain: MiddlewareChain | None = None,
         *,
         dispatcher_type: Type[Dispatcher] = DefaultDispatcher,
@@ -52,6 +56,11 @@ class Mediator:
         return dispatch_result.response
 
     async def _send_events(self, events: list[Event]) -> None:
+        if not self._event_emitter:
+            raise RuntimeError(
+                "To use events logic, please ensure that you pass the EventEmitter class as a parameter."
+            )
+
         while events:
             event = events.pop()
             await self._event_emitter.emit(event)

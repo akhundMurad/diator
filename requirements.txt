@@ -11,3 +11,4 @@ orjson
 redis
 rodi
 di[anyio]
+azure-servicebus
