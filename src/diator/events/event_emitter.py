@@ -50,7 +50,7 @@ class EventEmitter:
 
         for handler_type in handlers_types:
             handler = await self._container.resolve(handler_type)
-            logger.info(
+            logger.debug(
                 "Handling Event(%s) via event handler(%s)",
                 type(event).__name__,
                 handler_type.__name__,
@@ -61,7 +61,7 @@ class EventEmitter:
     async def _(self, event: NotificationEvent) -> None:
         message = _build_message(event)
 
-        logger.info(
+        logger.debug(
             "Sending Notification Event(%s) to message broker %s",
             event.event_id,
             type(self._message_broker).__name__,
@@ -73,7 +73,7 @@ class EventEmitter:
     async def _(self, event: ECSTEvent) -> None:
         message = _build_message(event)
 
-        logger.info(
+        logger.debug(
             "Sending ECST event(%s) to message broker %s",
             event.event_id,
             type(self._message_broker).__name__,

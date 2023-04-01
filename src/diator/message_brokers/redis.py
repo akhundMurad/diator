@@ -21,5 +21,5 @@ class RedisMessageBroker:
 
             await pubsub.subscribe(channel)
 
-            logger.info("Sending message to Redis Pub/Sub %s.", message.message_id)
+            logger.debug("Sending message to Redis Pub/Sub %s.", message.message_id)
             await self._client.publish(channel, orjson.dumps(message))
