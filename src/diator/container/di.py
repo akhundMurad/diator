@@ -25,8 +25,6 @@ class DIContainer(Container[di.Container]):
 
     async def resolve(self, type_: Type[T]) -> T:
         executor = AsyncExecutor()
-        solved = self.external_container.solve(
-            Dependent(type_, scope="request"), scopes=["request"]
-        )
+        solved = self.external_container.solve(Dependent(type_, scope="request"), scopes=["request"])
         with self.external_container.enter_scope("request") as state:
             return await solved.execute_async(executor=executor, state=state)

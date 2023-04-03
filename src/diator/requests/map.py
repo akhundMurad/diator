@@ -18,9 +18,7 @@ class RequestMap:
     def get(self, request_type: Type[Request]) -> Type[RequestHandler]:
         handler_type = self._request_map.get(request_type)
         if not handler_type:
-            raise RequestHandlerDoesNotExist(
-                "RequestHandler not found matching Request type."
-            )
+            raise RequestHandlerDoesNotExist("RequestHandler not found matching Request type.")
 
         return handler_type
 

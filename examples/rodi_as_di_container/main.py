@@ -1,4 +1,5 @@
 import asyncio
+import logging
 
 from redis import asyncio as redis
 from rodi import Container
@@ -8,6 +9,7 @@ from diator.events import EventEmitter, EventMap
 from diator.mediator import Mediator
 from diator.message_brokers.redis import RedisMessageBroker
 from diator.middlewares import MiddlewareChain
+from diator.middlewares.logging import LoggingMiddleware
 from diator.requests import RequestMap
 
 from .join_meeting_room_command import JoinMeetingRoomCommand
@@ -30,7 +32,10 @@ def configure_di() -> RodiContainer:
 
 
 async def main() -> None:
+    logging.basicConfig(level=logging.DEBUG)
+
     middleware_chain = MiddlewareChain()
+    middleware_chain.add(LoggingMiddleware())
     middleware_chain.add(FirstMiddleware())
     middleware_chain.add(SecondMiddleware())
     event_map = EventMap()
