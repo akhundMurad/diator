@@ -33,9 +33,7 @@ class EventEmitter:
 
     """
 
-    def __init__(
-        self, message_broker: MessageBroker, event_map: EventMap, container: Container
-    ) -> None:
+    def __init__(self, message_broker: MessageBroker, event_map: EventMap, container: Container) -> None:
         self._message_broker = message_broker
         self._event_map = event_map
         self._container = container

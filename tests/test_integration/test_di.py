@@ -11,9 +11,7 @@ class Dependency:
 async def test_rodi_container_resolve() -> None:
     external_container = Container()
 
-    external_container.bind(
-        bind_by_type(Dependent(Dependency, scope="request"), Dependency)
-    )
+    external_container.bind(bind_by_type(Dependent(Dependency, scope="request"), Dependency))
 
     di_container = DIContainer()
     di_container.attach_external_container(external_container)

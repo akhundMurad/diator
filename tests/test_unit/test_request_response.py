@@ -59,9 +59,7 @@ class ReadMeetingDetailsQueryHandler(
     def events(self) -> list:
         return self._events
 
-    async def handle(
-        self, request: ReadMeetingDetailsQuery
-    ) -> ReadMeetingDetailsQueryResult:
+    async def handle(self, request: ReadMeetingDetailsQuery) -> ReadMeetingDetailsQueryResult:
         self.called = True
         return ReadMeetingDetailsQueryResult(meeting_room_id=request.meeting_room_id)
 

@@ -6,9 +6,7 @@ from diator.message_brokers.protocol import Message
 
 
 class AzureMessageBroker:
-    def __init__(
-        self, client: ServiceBusClient, topic_name: str, *, timeout: float | None = None
-    ) -> None:
+    def __init__(self, client: ServiceBusClient, topic_name: str, *, timeout: float | None = None) -> None:
         self._client = client
         self._topic_name = topic_name
         self._timeout = timeout

@@ -21,11 +21,7 @@ from .user_joined_event_handler import UserJoinedEventHandler
 def configure_di() -> DIContainer:
     container = Container()
 
-    container.bind(
-        bind_by_type(
-            Dependent(UserJoinedEventHandler, scope="request"), UserJoinedEventHandler
-        )
-    )
+    container.bind(bind_by_type(Dependent(UserJoinedEventHandler, scope="request"), UserJoinedEventHandler))
     container.bind(
         bind_by_type(
             Dependent(JoinMeetingRoomCommandHandler, scope="request"),

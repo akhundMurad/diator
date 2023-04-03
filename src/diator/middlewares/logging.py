@@ -4,23 +4,20 @@ from typing import Awaitable, Callable, Mapping, Protocol, TypeVar
 from diator.requests import Request
 from diator.response import Response
 
-
 Req = TypeVar("Req", bound=Request, contravariant=True)
 Res = TypeVar("Res", Response, None, covariant=True)
 HandleType = Callable[[Req], Awaitable[Res]]
 
 
-class LoggerProtocol(Protocol):
-    def log(
-        self, level: int, msg: str, *args, extra: Mapping[str, object] | None = None
-    ) -> None:
+class Logger(Protocol):
+    def log(self, level: int, msg: str, *args, extra: Mapping[str, object] | None = None) -> None:  # noqa
         ...
 
 
 class LoggingMiddleware:
     def __init__(
         self,
-        logger: LoggerProtocol | None = None,
+        logger: Logger | None = None,
         level: int = logging.DEBUG,
     ) -> None:
         self._logger = logger or logging.getLogger(__name__)
