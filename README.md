@@ -207,19 +207,19 @@ from diator.container.di import DIContainer
 def setup_di() -> DIContainer:
     external_container = Container()
 
-    container.bind(
+    external_container.bind(
         bind_by_type(
             Dependent(UserJoinedDomainEventHandler, scope="request"), 
             UserJoinedDomainEventHandler
         )
     )
-    container.bind(
+    external_container.bind(
         bind_by_type(
             Dependent(JoinMeetingCommandHandler, scope="request"),
             JoinMeetingCommandHandler,
         )
     )
-    container.bind(
+    external_container.bind(
         bind_by_type(
             Dependent(ReadMeetingQueryHandler, scope="request"),
             ReadMeetingQueryHandler,
