@@ -324,6 +324,14 @@ Redis Pub/Sub output:
 }
 ```
 
+## Further reading :scroll:
+
+- [Udi Dahan - Clarified CQRS](https://udidahan.com/2009/12/09/clarified-cqrs/)
+- [Martin Fowler - CQRS](https://martinfowler.com/bliki/CQRS.html)
+- [Marting Fowler - What do you mean by “Event-Driven”?](https://martinfowler.com/articles/201701-event-driven.html)
+- [Vlad Khononov - Learning Domain-Driven Design](https://www.oreilly.com/library/view/learning-domain-driven-design/9781098100124/)
+- [Vaughn Vernon - Really Simple CQRS](https://kalele.io/really-simple-cqrs/)
+
 ## License
 
 This project is licensed under the terms of the MIT license.
