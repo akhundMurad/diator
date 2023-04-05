@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "diator"
-version = "0.0.4"
+version = "0.1.0"
 authors = [{ name = "Murad Akhundov", email = "akhundov1murad@gmail.com" }]
 description = "Diator is a Python library for implementing CQRS pattern in your Python applications."
 readme = "README.md"
@@ -64,6 +64,7 @@ exclude = [
 
 [project.optional-dependencies]
 redis = ["redis"]
+azure = ["azure-servicebus"]
 test = [
   "pytest",
   "pytest-asyncio",

@@ -40,9 +40,9 @@ class NotificationEvent(Event):
 @dataclass(frozen=True, kw_only=True)
 class ECSTEvent(Event):
     """
-    Base class for ECTS events.
+    Base class for ECST events.
 
-    ECTS means event-carried state transfer.
+    ECST means event-carried state transfer.
 
     Contains full information about state change.
 
