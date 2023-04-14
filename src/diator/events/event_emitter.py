@@ -23,7 +23,7 @@ class EventEmitter:
       event_map =  EventMap()
       event_map.bind(UserJoinedDomainEvent, UserJoinedDomainEventHandler)
 
-      event_emitter = EventEmitter(message_broker, event_emitter, container)
+      event_emitter = EventEmitter(event_map, container, message_broker)
 
       # Uses UserJoinedDomainEventHandler for handling event:
       await event_emitter.emit(user_joined_domain_event)
@@ -33,10 +33,15 @@ class EventEmitter:
 
     """
 
-    def __init__(self, message_broker: MessageBroker, event_map: EventMap, container: Container) -> None:
-        self._message_broker = message_broker
+    def __init__(
+        self,
+        event_map: EventMap,
+        container: Container,
+        message_broker: MessageBroker | None = None,
+    ) -> None:
         self._event_map = event_map
         self._container = container
+        self._message_broker = message_broker
 
     @singledispatchmethod
     async def emit(self, event: Event) -> None:
@@ -57,6 +62,9 @@ class EventEmitter:
 
     @emit.register
     async def _(self, event: NotificationEvent) -> None:
+        if not self._message_broker:
+            raise RuntimeError("To use NotificationEvent, message_broker argument must be specified.")
+
         message = _build_message(event)
 
         logger.debug(
@@ -69,6 +77,9 @@ class EventEmitter:
 
     @emit.register
     async def _(self, event: ECSTEvent) -> None:
+        if not self._message_broker:
+            raise RuntimeError("To use ECSTEvent, message_broker argument must be specified.")
+
         message = _build_message(event)
 
         logger.debug(

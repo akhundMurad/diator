@@ -19,3 +19,6 @@ class EventMap:
 
     def get_events(self) -> list[Type[DomainEvent]]:
         return list(self._event_map.keys())
+
+    def __str__(self) -> str:
+        return str(self._event_map)

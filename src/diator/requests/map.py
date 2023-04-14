@@ -22,6 +22,9 @@ class RequestMap:
 
         return handler_type
 
+    def __str__(self) -> str:
+        return str(self._request_map)
+
 
 class RequestHandlerDoesNotExist(Exception):
     ...
