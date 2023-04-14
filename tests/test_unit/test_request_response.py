@@ -9,8 +9,6 @@ from diator.mediator import Mediator
 from diator.requests import Request, RequestHandler, RequestMap
 from diator.response import Response
 
-HANDLER_CALLED = False
-
 
 @dataclass(frozen=True, kw_only=True)
 class CloseMeetingRoomCommand(Request):
