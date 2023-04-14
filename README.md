@@ -1,3 +1,5 @@
+![logo](./assets/logo_diator.svg)
+
 # Diator - CQRS Library for Python
 
 Diator is a Python library for implementing CQRS pattern in your Python applications. It provides a set of abstractions and utilities to help you separate your read and write concerns, allowing for better scalability, performance, and maintainability of your application.
