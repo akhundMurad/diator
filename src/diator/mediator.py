@@ -20,7 +20,7 @@ class Mediator:
       event_map.bind(UserJoinedDomainEvent, UserJoinedDomainEventHandler)
       request_map = RequestMap()
       request_map.bind(JoinUserCommand, JoinUserCommandHandler)
-      event_emitter = EventEmitter(message_broker, event_emitter, container)
+      event_emitter = EventEmitter(event_map, container, message_broker)
 
       mediator = Mediator(
         event_emitter=event_emitter,
