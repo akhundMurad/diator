@@ -13,6 +13,12 @@ Diator is a Python library for implementing CQRS pattern in your Python applicat
 
 Install the Diator library with [pip](https://pypi.org/project/diator/)
 
+```bash
+pip install diator
+```
+
+There are also several installation options:
+
 - To use Redis as Message Broker
 
     ```bash
@@ -136,7 +142,7 @@ from diator.events import DomainEvent, NotificationEvent, ECSTEvent
 
 
 @dataclasses.dataclass(frozen=True, kw_only=True)
-class UserJoinedDomainEvent(Event):  # will be handled by an event handler
+class UserJoinedDomainEvent(DomainEvent):  # will be handled by an event handler
     user_id: int = dataclasses.field()
     meeting_id: int = dataclasses.field()
     timestamp: datetime = dataclasses.field()
