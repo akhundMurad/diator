@@ -33,7 +33,12 @@ class EventEmitter:
 
     """
 
-    def __init__(self, event_map: EventMap, container: Container, message_broker: MessageBroker | None = None) -> None:
+    def __init__(
+        self,
+        event_map: EventMap,
+        container: Container,
+        message_broker: MessageBroker | None = None,
+    ) -> None:
         self._event_map = event_map
         self._container = container
         self._message_broker = message_broker
@@ -57,6 +62,9 @@ class EventEmitter:
 
     @emit.register
     async def _(self, event: NotificationEvent) -> None:
+        if not self._message_broker:
+            raise RuntimeError("To use NotificationEvent, message_broker argument must be specified.")
+
         message = _build_message(event)
 
         logger.debug(
@@ -69,6 +77,9 @@ class EventEmitter:
 
     @emit.register
     async def _(self, event: ECSTEvent) -> None:
+        if not self._message_broker:
+            raise RuntimeError("To use ECSTEvent, message_broker argument must be specified.")
+
         message = _build_message(event)
 
         logger.debug(

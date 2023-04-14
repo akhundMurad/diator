@@ -18,6 +18,7 @@ class DefaultDispatcher:
 
     async def dispatch(self, request: Request) -> DispatchResult:
         handler_type = self._request_map.get(type(request))
+
         handler = await self._container.resolve(handler_type)
 
         wrapped_handle = self._middleware_chain.wrap(handler.handle)
