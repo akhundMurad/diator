@@ -1,0 +1,50 @@
+site_name: "diator"
+site_description: Diator is a Python library for implementing CQRS pattern in your Python applications.
+site_url: ...
+
+
+theme:
+  name: "material"
+  custom_dir: docs/overrides
+  palette:
+    - scheme: "default"
+      primary: "black"
+      accent: "amber"
+      media: "(prefers-color-scheme: light)"
+      toggle:
+        icon: "material/weather-night"
+        name: "Switch to dark mode"
+    - scheme: "slate"
+      primary: "black"
+      accent: "amber"
+      media: "(prefers-color-scheme: dark)"
+      toggle:
+        icon: "material/weather-sunny"
+        name: "Switch to light mode"
+
+
+repo_name: akhundMurad/diator
+repo_url: https://github.com/akhundMurad/ditor
+edit_uri: "blob/main/docs/"
+
+nav:
+  - Intro: README.md
+  - Examples: examples.md
+  - Architecture: architecture.md
+  - Requests: requests.md
+  - Events: events.md
+  - Message Brokers: message_brokers.md
+  - Dependency Injection: di.md
+  - Middlewares: middlewares.md
+  - API Interface: api.md
+  - Contributing: contributing.md
+
+extra:
+  version:
+    provider: mike
+
+plugins:
+  - mkdocstrings
+  - mike:
+      version_selector: true
+  - search:

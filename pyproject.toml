@@ -73,6 +73,9 @@ test = [
   "mypy",
   "types-redis",
   "isort",
+  "mike",
+  "mkdocs",
+  "mkdocs-material"
 ]
 
 [tool.isort]

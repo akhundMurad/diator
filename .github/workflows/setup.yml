@@ -39,6 +39,7 @@ jobs:
       - name: Run tests
         run: |
           make test
+
       - name: Run linters
         run: |
           make check-linting
