@@ -1,21 +1,71 @@
 import asyncio
+from dataclasses import dataclass
 
 from di import Container, bind_by_type
 from di.dependent import Dependent
 from redis import asyncio as redis
 
 from diator.container.di import DIContainer
-from diator.events import EventEmitter, EventMap
+from diator.events import (
+    DomainEvent,
+    EventEmitter,
+    EventHandler,
+    EventMap,
+    NotificationEvent,
+)
 from diator.mediator import Mediator
 from diator.message_brokers.redis import RedisMessageBroker
 from diator.middlewares import MiddlewareChain
-from diator.requests import RequestMap
+from diator.requests import Request, RequestHandler, RequestMap
 
-from .join_meeting_room_command import JoinMeetingRoomCommand
-from .join_meeting_room_command_handler import JoinMeetingRoomCommandHandler
-from .middlewares import FirstMiddleware, SecondMiddleware
-from .user_joined_domain_event import UserJoinedDomainEvent
-from .user_joined_event_handler import UserJoinedEventHandler
+
+@dataclass(frozen=True, kw_only=True)
+class JoinMeetingRoomCommand(Request):
+    user_id: int
+
+
+@dataclass(frozen=True, kw_only=True)
+class UserJoinedDomainEvent(DomainEvent):
+    user_id: int
+
+
+@dataclass(frozen=True, kw_only=True)
+class UserJoinedNotificationEvent(NotificationEvent):
+    user_id: int
+
+
+class JoinMeetingRoomCommandHandler(RequestHandler[JoinMeetingRoomCommand, None]):
+    def __init__(self) -> None:
+        self._events = []
+
+    @property
+    def events(self) -> list:
+        return self._events
+
+    async def handle(self, request: JoinMeetingRoomCommand) -> None:
+        self._events.append(UserJoinedDomainEvent(user_id=request.user_id))
+        self._events.append(UserJoinedNotificationEvent(user_id=123))
+
+
+class UserJoinedEventHandler(EventHandler[UserJoinedDomainEvent]):
+    async def handle(self, event: UserJoinedDomainEvent) -> None:
+        print("READY", event)
+
+
+class FirstMiddleware:
+    async def __call__(self, request: Request, handle):
+        print("Before 1 handling...")
+        response = await handle(request)
+        print("After 1 handling...")
+        return response
+
+
+class SecondMiddleware:
+    async def __call__(self, request: Request, handle):
+        print("Before 2  handling...")
+        response = await handle(request)
+        print("After 2 handling...")
+        return response
 
 
 def configure_di() -> DIContainer:
