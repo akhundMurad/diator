@@ -108,4 +108,16 @@ request_map.bind(ReadMeetingQuery, ReadMeetingQueryHandler)
 
 ```
 
+And then, put it to `Mediator`:
 
+```python hl_lines="9"
+from diator.mediator import Mediator
+from diator.requests import RequestMap
+
+
+request_map = RequestMap()
+request_map.bind(JoinMeetingCommand, JoinMeetingCommandHandler)
+request_map.bind(ReadMeetingQuery, ReadMeetingQueryHandler)
+
+mediator = Mediator(request_map=request_map, container=container)
+```
