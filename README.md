@@ -1,3 +1,5 @@
+![Diator Logo](https://github.com/akhundMurad/diator/blob/main/assets/logo_diator.svg?raw=true)
+
 <a href="https://github.com/akhundMurad/diator/actions?query=setup%3ACI%2FCD+event%3Apush+branch%3Amain" target="_blank">
     <img src="https://github.com/akhundMurad/diator/actions/workflows/setup.yml/badge.svg?event=push&branch=main" alt="Test">
 </a>
@@ -10,8 +12,6 @@
 <a href="https://pypi.org/project/diator" target="_blank">
     <img src="https://img.shields.io/pypi/pyversions/diator.svg?color=red&labelColor=black" alt="Supported Python versions">
 </a>
-
-![logo](./assets/logo_diator.svg)
 
 # Diator - CQRS Library for Python
 
@@ -52,29 +52,25 @@ There are also several installation options:
 Minimal example of diator usage:
 
 ```python
+import asyncio
 from dataclasses import dataclass, field
-from di import Container, bind_by_type  # using di lib as di-framework
+from di import Container, bind_by_type
+from di.dependent import Dependent
+from diator.events import EventMap, Event, EventEmitter
 from diator.container.di import DIContainer
 from diator.mediator import Mediator
 from diator.requests import Request, RequestHandler, RequestMap
-from diator.events import EventEmitter, EventMap, NotificationEvent
-from diator.message_brokers.redis import RedisMessageBroker
 
 
 @dataclass(frozen=True, kw_only=True)
 class JoinMeetingCommand(Request):
     meeting_id: int
-    user_id: str
+    user_id: int
     is_late: bool = field(default=False)
 
 
-@dataclass(frozen=True, kw_only=True)
-class UserJoinedNotificationEvent(NotificationEvent):
-    user_id: int
-
-
 class JoinMeetingCommandHandler(RequestHandler[JoinMeetingCommand, None]):
-    def __init__(self, meeting_api: MeetingAPI) -> None:
+    def __init__(self, meeting_api) -> None:
         self._meeting_api = meeting_api
         self._events: list[Event] = []
 
@@ -87,20 +83,21 @@ class JoinMeetingCommandHandler(RequestHandler[JoinMeetingCommand, None]):
         if request.is_late:
             self._meeting_api.warn(request.user_id)
 
-        self._events.append(UserJoinedNotificationEvent(user_id=request.user_id))
-
 
 def setup_di() -> DIContainer:
     external_container = Container()
 
     external_container.bind(
         bind_by_type(
-            Dependent(JoinMeetingCommandHandler, scope="request"), 
-            JoinMeetingCommandHandler
+            Dependent(JoinMeetingCommandHandler, scope="request"),
+            JoinMeetingCommandHandler,
         )
     )
 
-    retrurn external_container
+    container = DIContainer()
+    container.attach_external_container(external_container)
+
+    return container
 
 
 async def main() -> None:
@@ -109,31 +106,22 @@ async def main() -> None:
     request_map = RequestMap()
     request_map.bind(JoinMeetingCommand, JoinMeetingCommandHandler)
 
-    redis_client = redis.Redis.from_url("redis://localhost:6379/0")  # Creating Async Redis Client
-
     event_emitter = EventEmitter(
-        message_broker=RedisMessageBroker(redis_client),
-        event_map=event_map,
-        container=container,
+        event_map=EventMap(), container=container, message_broker=None
     )
 
     mediator = Mediator(
-        request_map=request_map, 
-        event_emitter=event_emitter, 
-        container=container, 
-        middleware_chain=MiddlewareChain
+        request_map=request_map,
+        event_emitter=event_emitter,
+        container=container,
     )
 
-    """ 
-    1. JoinMeetingCommand is handled by JoinMeetingCommandHandler
-    2. JoinMeetingCommandHandler publishes Notification Event
-    4. UserJoinedNotificationEvent is sent to the Redis Pub/Sub
-    """
     await mediator.send(JoinMeetingCommand(user_id=1, meeting_id=1, is_late=True))
 
 
 if __name__ == "__main__":
     asyncio.run(main())
+
 ```
 
 ## Further reading :scroll:

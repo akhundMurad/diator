@@ -75,7 +75,8 @@ test = [
   "isort",
   "mike",
   "mkdocs",
-  "mkdocs-material"
+  "mkdocs-material",
+  "mkdocstrings",
 ]
 
 [tool.isort]
