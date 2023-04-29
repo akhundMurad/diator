@@ -52,25 +52,11 @@ async def main() -> None:
     request_map = RequestMap()
     request_map.bind(CleanUnactiveUsersCommand, CleanUnactiveUsersCommandHandler)
 
-    azure_service_bus_client = ServiceBusClient.from_connection_string(
-        service_bus_connection_string
-    )
-    message_broker = AzureMessageBroker(
-        azure_service_bus_client,
-        topic_name,
-        timeout=15
-    )
-    event_emitter = EventEmitter(
-        message_broker=message_broker,
-        event_map=EventMap(),
-        container=container
-    )
+    azure_service_bus_client = ServiceBusClient.from_connection_string(service_bus_connection_string)
+    message_broker = AzureMessageBroker(azure_service_bus_client, topic_name, timeout=15)
+    event_emitter = EventEmitter(message_broker=message_broker, event_map=EventMap(), container=container)
 
-    mediator = Mediator(
-        event_emitter=event_emitter,
-        request_map=request_map,
-        container=container
-    )
+    mediator = Mediator(event_emitter=event_emitter, request_map=request_map, container=container)
 
     await mediator.send(CleanUnactiveUsersCommand(eta=timedelta(days=1)))
 

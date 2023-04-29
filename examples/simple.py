@@ -1,9 +1,11 @@
 import asyncio
 from dataclasses import dataclass, field
+
 from di import Container, bind_by_type
 from di.dependent import Dependent
-from diator.events import EventMap, Event, EventEmitter
+
 from diator.container.di import DIContainer
+from diator.events import Event, EventEmitter, EventMap
 from diator.mediator import Mediator
 from diator.requests import Request, RequestHandler, RequestMap
 
@@ -52,9 +54,7 @@ async def main() -> None:
     request_map = RequestMap()
     request_map.bind(JoinMeetingCommand, JoinMeetingCommandHandler)
 
-    event_emitter = EventEmitter(
-        event_map=EventMap(), container=container, message_broker=None
-    )
+    event_emitter = EventEmitter(event_map=EventMap(), container=container, message_broker=None)
 
     mediator = Mediator(
         request_map=request_map,
@@ -62,11 +62,7 @@ async def main() -> None:
         container=container,
     )
 
-    await mediator.send(
-        JoinMeetingCommand(
-            user_id=1, meeting_id=1, is_late=True
-        )
-    )
+    await mediator.send(JoinMeetingCommand(user_id=1, meeting_id=1, is_late=True))
 
 
 if __name__ == "__main__":

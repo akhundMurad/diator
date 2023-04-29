@@ -35,7 +35,6 @@ nav:
   - Architecture: architecture.md
   - Requests: requests.md
   - Events: events.md
-  - Message Brokers: message_brokers.md
   - Dependency Injection: di.md
   - Middlewares: middlewares.md
   - API Interface: api.md
