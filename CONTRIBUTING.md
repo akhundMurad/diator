@@ -4,8 +4,9 @@ This page discribes how to contribute to Diator.
 
 ## Requirements
 
-- supported Python version (e.g. Python 3.10 or Python 3.11).
 - Linux, since all development proccess adapted for Linux machines.
+- supported Python version (e.g. Python 3.10 or Python 3.11).
+- Redis, since we have integration and end-to-end tests.
 
 ## Environment preparation
 
@@ -29,10 +30,10 @@ This page discribes how to contribute to Diator.
     pip install -e .["test"]
     ```
 
-6. run tests:
+6. run unit tests:
 
     ```bash
-    make test
+    make test-unit
     ```
 
 ## Formatters

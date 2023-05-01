@@ -36,4 +36,4 @@ release:
 
 
 test:
-	pytest
+	pytest -v
