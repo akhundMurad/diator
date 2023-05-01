@@ -37,7 +37,6 @@ nav:
   - Events: events.md
   - Dependency Injection: di.md
   - Middlewares: middlewares.md
-  - API Interface: api.md
   - Contributing: contributing.md
 
 markdown_extensions:

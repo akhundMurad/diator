@@ -88,7 +88,7 @@ classDiagram
 ### Request dispatching:
 
 ```mermaid
-graph LR
+graph TB
     Client-- JoinMeetingCommand -->Mediator-->Dispatcher-- JoinMeetingCommand -->JoinMeetingCommandHandler
 ```
 
@@ -103,7 +103,7 @@ Description:
 ### Event dispatching:
 
 ```mermaid
-graph LR
+graph TB
     Dispatcher-- UserJoinedEvent -->Mediator-->EventEmitter-- UserJoinedEvent -->UserJoinedEventHandler
 ```
 

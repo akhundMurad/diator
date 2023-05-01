@@ -10,7 +10,7 @@ There are several types of events:
 
 Domain events are handled by specialized handlers, whereas Notification and ECST events are sent to message brokers.
 
-## Publish Event
+## Publishing Event
 
 Events are published in the `CommandHandler` side like below:
 
@@ -64,6 +64,7 @@ Event Handler is a component responsible for processing an Domain Event that has
 
 ```python
 from diator.events import EventHandler
+
 
 class UserJoinedDomainEventHandler(EventHandler[UserJoinedDomainEvent]):
     def __init__(self, meeting_api: MeetingAPI) -> None:
@@ -157,6 +158,7 @@ To use Redis Pub/Sub as message broker, simply import it and put to `EventEmitte
 from redis.asyncio import Redis
 from diator.events import EventMap, EventEmitter
 from diator.message_brokers.redis import RedisMessageBroker
+
 
 redis_client = Redis()
 
