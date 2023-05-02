@@ -27,7 +27,7 @@ repo_url: https://github.com/akhundMurad/diator
 edit_uri: "blob/main/docs/"
 
 nav:
-  - Introduction: introduction.md
+  - Introduction: index.md
   - Examples: examples.md
   - Architecture: architecture.md
   - Requests: requests.md
