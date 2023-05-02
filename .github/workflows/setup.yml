@@ -68,6 +68,9 @@ jobs:
           path: .cache
           restore-keys: |
             mkdocs-material-
-      - run: pip install -e .[test]
-      - run: pip install toml-cli
-      - run: mike deploy --push --update-aliases --branch gh-docs $(toml get --toml-path pyproject.toml project.version) latest
+      - run: |
+          pip install -e .[test]
+          pip install toml-cli
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          mike deploy --push --update-aliases --branch docs $(toml get --toml-path pyproject.toml project.version) latest
