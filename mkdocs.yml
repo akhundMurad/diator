@@ -1,6 +1,6 @@
 site_name: "Diator"
 site_description: Diator is a Python library for implementing CQRS pattern in your Python applications.
-site_url: https://github.com/akhundMurad/diator
+site_url: https://akhundmurad.github.io/diator/
 
 
 theme:
