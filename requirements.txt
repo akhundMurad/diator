@@ -14,5 +14,4 @@ di[anyio]
 azure-servicebus
 mkdocs
 mkdocs-material
-mike
 mkdocstrings
