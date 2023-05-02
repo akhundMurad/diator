@@ -78,6 +78,9 @@ test = [
   "mypy",
   "isort",
   "flake8",
+  "azure-servicebus",
+  "redis",
+  "di[anyio]",
 ]
 
 [tool.isort]
