@@ -81,6 +81,7 @@ test = [
   "azure-servicebus",
   "redis",
   "di[anyio]",
+  "rodi",
 ]
 
 [tool.isort]
