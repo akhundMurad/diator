@@ -68,15 +68,16 @@ azure = ["azure-servicebus"]
 test = [
   "pytest",
   "pytest-asyncio",
-  "black",
-  "vulture",
-  "mypy",
   "types-redis",
-  "isort",
   "mike",
   "mkdocs",
   "mkdocs-material",
   "mkdocstrings",
+  "black",
+  "vulture",
+  "mypy",
+  "isort",
+  "flake8",
 ]
 
 [tool.isort]
