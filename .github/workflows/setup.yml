@@ -73,4 +73,4 @@ jobs:
           pip install toml-cli
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          mike deploy --push --update-aliases --branch docs $(toml get --toml-path pyproject.toml project.version) latest
+          mike deploy --push --update-aliases --branch gh-docs $(toml get --toml-path pyproject.toml project.version) latest

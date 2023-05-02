@@ -24,7 +24,6 @@ theme:
         icon: "material/weather-sunny"
         name: "Switch to light mode"
 
-
 repo_name: akhundMurad/diator
 repo_url: https://github.com/akhundMurad/diator
 edit_uri: "blob/main/docs/"
