@@ -70,5 +70,4 @@ jobs:
             mkdocs-material-
       - run: pip install -e .[test]
       - run: pip install toml-cli
-      - run: mkdocs gh-deploy --force
       - run: mike deploy --push --update-aliases --branch gh-docs $(toml get --toml-path pyproject.toml project.version) latest
