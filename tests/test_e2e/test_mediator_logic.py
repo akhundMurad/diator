@@ -103,6 +103,31 @@ def mediator_without_broker() -> Mediator:
     )
 
 
+@pytest.fixture
+def mediator_without_event_emitter() -> Mediator:
+    container = Container()
+    container.register_factory(
+        lambda: redis.Redis.from_url("redis://localhost:6379/0"),
+        redis.Redis,
+        ServiceLifeStyle.TRANSIENT,
+    )
+    container.register(JoinMeetingRoomCommandHandler)
+    rodi_container = RodiContainer()
+    rodi_container.attach_external_container(container)
+
+    request_map = RequestMap()
+    request_map.bind(JoinMeetingRoomCommand, JoinMeetingRoomCommandHandler)
+
+    middleware_chain = MiddlewareChain()
+    middleware_chain.add(TestMiddleware())
+
+    return Mediator(
+        request_map=request_map,
+        container=rodi_container,
+        middleware_chain=middleware_chain,
+    )
+
+
 async def test_send_command_with_middleware(redis_client: redis.Redis, mediator: Mediator):
     await mediator.send(JoinMeetingRoomCommand(user_id=1, meeting_id=1))
 
@@ -113,3 +138,7 @@ async def test_send_command_with_middleware(redis_client: redis.Redis, mediator:
 
 async def test_mediator_without_message_broker(mediator_without_broker: Mediator) -> None:
     await mediator_without_broker.send(JoinMeetingRoomCommand(user_id=1, meeting_id=1))
+
+
+async def test_mediator_without_message_event_emitter(mediator_without_event_emitter: Mediator) -> None:
+    await mediator_without_event_emitter.send(JoinMeetingRoomCommand(user_id=1, meeting_id=1))

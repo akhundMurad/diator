@@ -1,7 +1,7 @@
 check-linting:
 	vulture src/ --min-confidence 70
 	isort --check --profile black src/ tests/ examples/
-	flake8 --exit-zero src/ tests/ examples/
+	flake8 --exit-zero src/ tests/ examples/ --exit-zero
 	black --check --diff src/ tests/ examples/ --line-length 119
 	mypy src/ --pretty
 
@@ -36,4 +36,4 @@ release:
 
 
 test:
-	pytest
+	pytest -v

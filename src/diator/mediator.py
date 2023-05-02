@@ -37,7 +37,7 @@ class Mediator:
         self,
         request_map: RequestMap,
         container: Container,
-        event_emitter: EventEmitter,
+        event_emitter: EventEmitter | None = None,
         middleware_chain: MiddlewareChain | None = None,
         *,
         dispatcher_type: Type[Dispatcher] = DefaultDispatcher,
@@ -56,6 +56,9 @@ class Mediator:
         return dispatch_result.response
 
     async def _send_events(self, events: list[Event]) -> None:
+        if not self._event_emitter:
+            return
+
         while events:
             event = events.pop()
             await self._event_emitter.emit(event)

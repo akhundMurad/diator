@@ -1,0 +1,30 @@
+name: CI
+
+on: [pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run linters
+        run: |
+          pip install -e .["test"]
+          make check-linting
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run tests
+        run: |
+          pip install -e .["test"]
+          make test
+
+    services:
+      redis:
+        image: redis:alpine
+        env:
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379
+        ports:
+          - 6379:6379

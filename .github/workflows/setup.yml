@@ -21,7 +21,7 @@ jobs:
         python-version: ["3.10", "3.11"]
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 9
           submodules: false
@@ -39,6 +39,7 @@ jobs:
       - name: Run tests
         run: |
           make test
+
       - name: Run linters
         run: |
           make check-linting
@@ -51,3 +52,25 @@ jobs:
           REDIS_PORT: 6379
         ports:
           - 6379:6379
+
+  deploy-docs:
+    runs-on: ubuntu-latest
+    needs: ["build"]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+      - uses: actions/cache@v3
+        with:
+          key: mkdocs-material-${{ github.ref }}
+          path: .cache
+          restore-keys: |
+            mkdocs-material-
+      - run: |
+          pip install -e .[test]
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          mkdocs gh-deploy --force
