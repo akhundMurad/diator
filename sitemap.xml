@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
+         <loc>https://akhundmurad.github.io/diator/</loc>
+         <lastmod>2023-05-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://akhundmurad.github.io/diator/architecture/</loc>
          <lastmod>2023-05-02</lastmod>
          <changefreq>daily</changefreq>
@@ -22,11 +27,6 @@
     </url>
     <url>
          <loc>https://akhundmurad.github.io/diator/examples/</loc>
-         <lastmod>2023-05-02</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://akhundmurad.github.io/diator/introduction/</loc>
          <lastmod>2023-05-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
