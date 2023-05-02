@@ -14,6 +14,7 @@
 </a>
 
 # Diator - CQRS Library for Python
+**[Docs](https://akhundmurad.github.io/diator/) | [PyPI](https://pypi.org/project/diator/)**
 
 Diator is a Python library for implementing CQRS pattern in your Python applications. It provides a set of abstractions and utilities to help you separate your read and write concerns, allowing for better scalability, performance, and maintainability of your application.
 
