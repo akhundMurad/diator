@@ -4,7 +4,6 @@ site_url: https://akhundmurad.github.io/diator/
 
 theme:
   name: "material"
-  custom_dir: docs/overrides
   features:
     - navigation.instant
   palette:
