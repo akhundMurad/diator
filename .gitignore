@@ -1,0 +1,13 @@
+/*
+__pycache__
+
+.DS_Store
+!/refs
+!/update_versions.py
+!/versions.json
+!/.pre-commit-config.yaml
+!/.gitignore
+!/_config.yml
+!/index.html
+!/latest
+!/stable
