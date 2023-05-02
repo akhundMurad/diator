@@ -68,7 +68,7 @@ Configure by 2 steps:
 
 2. Integrate with Diator:
 
-    ```python hl_lines="4 17-18"
+    ```python hl_lines="4 18-19"
     from di import Container, bind_by_type
     from di.dependent import Dependent
 

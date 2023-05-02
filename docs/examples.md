@@ -20,6 +20,6 @@
 
 ## Azure Service Bus
 
-```python hl_lines="55-67"
+```python hl_lines="55-57"
 --8<-- "examples/azure.py"
 ```
