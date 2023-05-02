@@ -861,15 +861,15 @@
 <span class="hll">    <span class="n">azure_service_bus_client</span> <span class="o">=</span> <span class="n">ServiceBusClient</span><span class="o">.</span><span class="n">from_connection_string</span><span class="p">(</span><span class="n">service_bus_connection_string</span><span class="p">)</span>
 </span><span class="hll">    <span class="n">message_broker</span> <span class="o">=</span> <span class="n">AzureMessageBroker</span><span class="p">(</span><span class="n">azure_service_bus_client</span><span class="p">,</span> <span class="n">topic_name</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
 </span><span class="hll">    <span class="n">event_emitter</span> <span class="o">=</span> <span class="n">EventEmitter</span><span class="p">(</span><span class="n">message_broker</span><span class="o">=</span><span class="n">message_broker</span><span class="p">,</span> <span class="n">event_map</span><span class="o">=</span><span class="n">EventMap</span><span class="p">(),</span> <span class="n">container</span><span class="o">=</span><span class="n">container</span><span class="p">)</span>
-</span><span class="hll">
-</span><span class="hll">    <span class="n">mediator</span> <span class="o">=</span> <span class="n">Mediator</span><span class="p">(</span><span class="n">event_emitter</span><span class="o">=</span><span class="n">event_emitter</span><span class="p">,</span> <span class="n">request_map</span><span class="o">=</span><span class="n">request_map</span><span class="p">,</span> <span class="n">container</span><span class="o">=</span><span class="n">container</span><span class="p">)</span>
-</span><span class="hll">
-</span><span class="hll">    <span class="k">await</span> <span class="n">mediator</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">CleanUnactiveUsersCommand</span><span class="p">(</span><span class="n">eta</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)))</span>
-</span><span class="hll">
-</span><span class="hll">
-</span><span class="hll"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-</span><span class="hll">    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
-</span></code></pre></div>
+</span>
+    <span class="n">mediator</span> <span class="o">=</span> <span class="n">Mediator</span><span class="p">(</span><span class="n">event_emitter</span><span class="o">=</span><span class="n">event_emitter</span><span class="p">,</span> <span class="n">request_map</span><span class="o">=</span><span class="n">request_map</span><span class="p">,</span> <span class="n">container</span><span class="o">=</span><span class="n">container</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">mediator</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">CleanUnactiveUsersCommand</span><span class="p">(</span><span class="n">eta</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)))</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</code></pre></div>
 
 
 
