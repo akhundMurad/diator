@@ -81,6 +81,8 @@ test = [
   "redis",
   "di[anyio]",
   "rodi",
+  "aio_pika",
+  "asyncio"
 ]
 
 [tool.isort]
